@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+
+		
+	<test name="Oh Jobs PH Mobile and Website Flow" preserve-order="true" enabled="true">
+		<parameter name="inputsheetname" value="Input.xlsx" />
+		<parameter name="testcaseName" value="Login" />
+    <classes> 
+      <class name="OhJobsPHTest.OhJobsPhTest">
+      <methods>
+     
+
+ 	  	
+ 	  	<include name="jobseekerSelectJobPreferenceWeb"/>
+ 	  
+ 
+      </methods>
+      </class>
+    </classes>
+  </test> <!-- Test -->  
+</suite> <!-- Suite -->

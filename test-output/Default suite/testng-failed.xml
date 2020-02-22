@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Default test(failed)">
+    <classes>
+      <class name="OhJobsPHTest.OhJobsPhTest">
+        <methods>
+          <include name="loginAsEmployer"/>
+          <include name="getSuiteName"/>
+          <include name="jobseekerSignUpWeb"/>
+          <include name="Check"/>
+          <include name="verifyEmail"/>
+          <include name="webmasterApproveJobPost"/>
+          <include name="tearDown"/>
+          <include name="testlang"/>
+          <include name="employerAddJob"/>
+          <include name="setInputSheetName"/>
+          <include name="initializeDriver"/>
+          <include name="jobseekerApplyJobOnMobile"/>
+          <include name="employerSignUp"/>
+          <include name="jobseekerLoginWeb"/>
+          <include name="jobseekerEditPersonalInformation"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- OhJobsPHTest.OhJobsPhTest -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->
