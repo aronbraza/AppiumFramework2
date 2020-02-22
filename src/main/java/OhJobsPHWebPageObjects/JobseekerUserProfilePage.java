@@ -199,7 +199,7 @@ public class JobseekerUserProfilePage extends base {
 	@FindBy(id = "add_achievement_info")
 	private WebElement otherInformation_Textbox;
 	
-	@FindBy(id = "add_achievement_info")
+	@FindBy(id = "add_achievement_detail_info")
 	private WebElement aboutOtherInformation_Textbox;
 	
 	@FindBy(id = "add_additional_info_form_submit")

@@ -12,7 +12,7 @@
      
 
  	  	
- 	  	<include name="jobseekerSelectJobPreferenceWeb"/>
+ 	  	<include name="jobseekerAddOtherInformation"/>
  	  
  
       </methods>

@@ -328,21 +328,14 @@ public class OhJobsPhTest extends base {
 			//Test Data
 			String jobPreference = inputData.get("Oh Jobs PH Test Data").get("Jobseeker(Job Prerference) Job Preference");
 			
-			JobseekerLoginPage jobseekerLoginPage = new JobseekerLoginPage(driver);
 			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
 			JobseekerUserProfilePage jobseekerUserProfilePage = new JobseekerUserProfilePage(driver);
-			
-			jobseekerHomePage.clickLogin(logger);
-			jobseekerLoginPage.setUsernameOrEmail(logger, "aronbraza");
-			jobseekerLoginPage.setPassword(logger, "Wog12345");
-			jobseekerLoginPage.clickLogin(logger);
 			
 			jobseekerHomePage.clickUserDropdown(logger);
 			jobseekerHomePage.clickUserProfile(logger);
 			jobseekerUserProfilePage.clickEditJobPreference(logger);
 			jobseekerUserProfilePage.selectJobPreference(logger, jobPreference);
 			jobseekerUserProfilePage.updateJobPreference(logger);
-			Thread.sleep(5000);
 		}
 		catch (Exception | AssertionError e) 
 		{
@@ -352,6 +345,33 @@ public class OhJobsPhTest extends base {
 		}
 		extent.endTest(logger);
 		extent.flush();
+	}
+	
+	@Test
+	public void jobseekerAddOtherInformation()
+	{
+		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Add Other Information");
+		try 
+		{
+			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
+			JobseekerUserProfilePage jobseekerUserProfilePage = new JobseekerUserProfilePage(driver);
+			
+			jobseekerHomePage.clickUserDropdown(logger);
+			jobseekerHomePage.clickUserProfile(logger);
+			jobseekerUserProfilePage.clickAddOtherInformation_Icon(logger);
+			jobseekerUserProfilePage.setOtherInformation(logger, "Selenium");
+			jobseekerUserProfilePage.setAboutOtherInformation(logger, "Sample about");
+			jobseekerUserProfilePage.clickSaveOtherInformation(logger);
+		}
+		catch (Exception | AssertionError e) 
+		{
+			e.printStackTrace();
+			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+					+ e.getMessage() + "</b>");
+		}
+		extent.endTest(logger);
+		extent.flush();
+		
 	}
 	
 	

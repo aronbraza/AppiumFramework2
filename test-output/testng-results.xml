@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="15" total="16" passed="1">
+<testng-results skipped="0" failed="0" ignored="16" total="17" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite" duration-ms="43499" started-at="2020-02-22T04:32:37Z" finished-at="2020-02-22T04:33:20Z">
+  <suite name="Suite" duration-ms="25483" started-at="2020-02-22T05:59:11Z" finished-at="2020-02-22T05:59:36Z">
     <groups>
     </groups>
-    <test name="Oh Jobs PH Mobile and Website Flow" duration-ms="43499" started-at="2020-02-22T04:32:37Z" finished-at="2020-02-22T04:33:20Z">
+    <test name="Oh Jobs PH Mobile and Website Flow" duration-ms="25483" started-at="2020-02-22T05:59:11Z" finished-at="2020-02-22T05:59:36Z">
       <class name="OhJobsPHTest.OhJobsPhTest">
-        <test-method status="PASS" signature="getSuiteName(org.testng.ITestContext)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="getSuiteName" is-config="true" duration-ms="25" started-at="2020-02-22T04:32:37Z" finished-at="2020-02-22T04:32:37Z">
+        <test-method status="PASS" signature="getSuiteName(org.testng.ITestContext)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="getSuiteName" is-config="true" duration-ms="24" started-at="2020-02-22T05:59:11Z" finished-at="2020-02-22T05:59:11Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[org.testng.TestRunner@77dba4cd]]>
+                <![CDATA[org.testng.TestRunner@60297f36]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getSuiteName -->
-        <test-method status="PASS" signature="setInputSheetName(java.lang.String)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="setInputSheetName" is-config="true" duration-ms="1724" started-at="2020-02-22T04:32:37Z" finished-at="2020-02-22T04:32:38Z">
+        <test-method status="PASS" signature="setInputSheetName(java.lang.String)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="setInputSheetName" is-config="true" duration-ms="1401" started-at="2020-02-22T05:59:11Z" finished-at="2020-02-22T05:59:12Z">
           <params>
             <param index="0">
               <value>
@@ -29,7 +29,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setInputSheetName -->
-        <test-method status="PASS" signature="setUp(java.lang.String, org.testng.ITestContext)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="setUp" is-config="true" duration-ms="275" started-at="2020-02-22T04:32:38Z" finished-at="2020-02-22T04:32:39Z">
+        <test-method status="PASS" signature="setUp(java.lang.String, org.testng.ITestContext)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="setUp" is-config="true" duration-ms="215" started-at="2020-02-22T05:59:12Z" finished-at="2020-02-22T05:59:12Z">
           <params>
             <param index="0">
               <value>
@@ -38,22 +38,22 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[org.testng.TestRunner@77dba4cd]]>
+                <![CDATA[org.testng.TestRunner@60297f36]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="initializeDriver()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="initializeDriver" is-config="true" duration-ms="16546" started-at="2020-02-22T04:32:39Z" depends-on-methods="resources.base.setInputSheetName, resources.base.setUp" finished-at="2020-02-22T04:32:55Z">
+        <test-method status="PASS" signature="initializeDriver()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="initializeDriver" is-config="true" duration-ms="10673" started-at="2020-02-22T05:59:12Z" depends-on-methods="resources.base.setInputSheetName, resources.base.setUp" finished-at="2020-02-22T05:59:23Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- initializeDriver -->
-        <test-method status="PASS" signature="jobseekerSelectJobPreferenceWeb()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="jobseekerSelectJobPreferenceWeb" duration-ms="24265" started-at="2020-02-22T04:32:55Z" finished-at="2020-02-22T04:33:20Z">
+        <test-method status="PASS" signature="jobseekerAddOtherInformation()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="jobseekerAddOtherInformation" duration-ms="12484" started-at="2020-02-22T05:59:23Z" finished-at="2020-02-22T05:59:36Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- jobseekerSelectJobPreferenceWeb -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="tearDown" is-config="true" duration-ms="665" started-at="2020-02-22T04:33:20Z" finished-at="2020-02-22T04:33:20Z">
+        </test-method> <!-- jobseekerAddOtherInformation -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@3fd7a715]" name="tearDown" is-config="true" duration-ms="688" started-at="2020-02-22T05:59:36Z" finished-at="2020-02-22T05:59:36Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
