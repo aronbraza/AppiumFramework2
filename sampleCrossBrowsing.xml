@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Cross Browsing Suite"  parallel="none">
+
+<test name="GoogleChrome">
+<parameter name="browserName" value="Chrome"></parameter>
+<parameter name="inputsheetname" value="Input.xlsx" />
+		<parameter name="testcaseName" value="Login" />
+
+<classes>
+      <class name="OhJobsPHTest.OhJobsPhTest">
+      <methods>
+     <include name="jobseekerSignUpWeb"/>
+      </methods>
+       </class>
+    </classes>
+</test>
+
+<test name="MozillaFirefox">
+<parameter name="browserName" value="Firefox"></parameter>
+<parameter name="inputsheetname" value="Input.xlsx" />
+<parameter name="testcaseName" value="Login" />
+
+<classes>
+      <class name="OhJobsPHTest.OhJobsPhTest">
+      <methods>
+     <include name="jobseekerSignUpWeb"/>
+      </methods>
+       </class>
+    </classes>
+</test>
+
+</suite> <!-- Suite -->

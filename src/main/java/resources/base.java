@@ -227,7 +227,6 @@ public class base {
 			
 			//String browserName =  System.getProperty("browser");
 			//String browserName = prop.getProperty("browser");
-			
 		try 
 		{
 			if(browserName.contains("Chrome"))
@@ -241,14 +240,14 @@ public class base {
 					options.addArguments("headless");
 				}
 				driver = new ChromeDriver(options);
-				logger.log(LogStatus.INFO, "<b>Chrome </b>browser is opened.");
+				logger.log(LogStatus.INFO, "<b>Google Chrome </b>browser is opened and navigated to the "+driver.getTitle()+".");
 			}
 			
 			else if(browserName.equals("Firefox"))
 			{
 				System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"\\driver\\geckodriver.exe");
 				driver = new FirefoxDriver();
-				logger.log(LogStatus.INFO, "<b>Mozilla </b>browser is opened.");
+				logger.log(LogStatus.INFO, "<b>Mozilla Firefox </b>browser is opened navigated to the "+driver.getTitle()+".");
 				
 			}
 			
@@ -256,6 +255,7 @@ public class base {
 			{
 				
 			}
+			
 			
 		}
 		catch (Exception e) 
@@ -285,6 +285,14 @@ public class base {
 		driver = initializeDriver(logger,inputData.get("Oh Jobs PH Test Data").get("Browser").toString());
 		//driver.get("http://beta-ohjobsph.ml/");
 		driver.get("https://ohjobs.ph/");
+	}
+	
+	public void initializeDriverForCrossBrowsing(ExtentTest logger, String browser) throws IOException
+	{
+		driver = initializeDriver(logger,browser);
+		//driver = initializeDriver(logger,inputData.get("Oh Jobs PH Test Data").get("Browser").toString());
+		driver.get("http://beta-ohjobsph.ml/");
+		//driver.get("https://ohjobs.ph/");
 	}
 	
 	

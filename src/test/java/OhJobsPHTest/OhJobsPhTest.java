@@ -6,12 +6,14 @@ import static org.testng.Assert.assertTrue;
 
 import java.awt.Checkbox;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -23,6 +25,7 @@ import OhJobsPHMobilePageObjects.JobDetailsPage;
 import OhJobsPHMobilePageObjects.JobsPage;
 import OhJobsPHMobilePageObjects.LoginPage;
 import OhJobsPHWebPageObjects.AdminLoginPage;
+import OhJobsPHWebPageObjects.DatabaseTestingBase;
 import OhJobsPHWebPageObjects.EmployerHomePage;
 import OhJobsPHWebPageObjects.EmployerJobPostingPage;
 import OhJobsPHWebPageObjects.EmployerSignUpPage;
@@ -48,11 +51,16 @@ public class OhJobsPhTest extends base {
 			
 	
 	@BeforeTest
-	public void initializeDriver() throws IOException, InterruptedException
+	@Parameters("browserName")
+	public void initializeDriver(String browserName) throws IOException, InterruptedException, ClassNotFoundException, SQLException
 	{
+		String emailAddress = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Email Address");
+		DatabaseTestingBase db = new DatabaseTestingBase();
+		db.deleteQuery(emailAddress);
+		
 		ExtentTest logger = extent.startTest("Open Browser");
 		//navigateToOhJobsPhAdminPage(logger);
-		navigateTest(logger);
+		initializeDriverForCrossBrowsing(logger, browserName);
 		//KillNode();
 		extent.endTest(logger);
 		extent.flush();
@@ -121,15 +129,17 @@ public class OhJobsPhTest extends base {
 		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Login");
 		try 
 		{
-			String emailAddress = inputData.get("Oh Jobs PH Test Data").get("Jobseeker Email Address");
-			String password = inputData.get("Oh Jobs PH Test Data").get("Jobseeker Password");
+			String emailAddress = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Email Address");
+			String password = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Password");
 			
+			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
 			JobseekerLoginPage jobseekerLoginPage = new JobseekerLoginPage(driver);
 			
+			jobseekerHomePage.clickLogin(logger);
 			jobseekerLoginPage.setUsernameOrEmail(logger, emailAddress);
 			jobseekerLoginPage.setPassword(logger, password);
 			jobseekerLoginPage.clickLogin(logger);
-			
+			Thread.sleep(6000);
 		}
 		catch (Exception | AssertionError e) 
 		{
