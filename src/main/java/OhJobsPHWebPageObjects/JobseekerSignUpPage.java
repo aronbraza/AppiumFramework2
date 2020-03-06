@@ -26,20 +26,11 @@ public class JobseekerSignUpPage extends base  {
 		PageFactory.initElements(driver, this);
 	}
 	
-	WebDriverWait wait = new WebDriverWait(driver, 30);
+	@FindBy(xpath = "//div[@class='alert alert-success' and contains(text(),'Creating your Oh Jobs account')]")
+	public List<WebElement> pleaseWait_Text;
 	
-	
-	
-	@FindBy(xpath = "//span[contains(., 'Creating your Oh Jobs account')]")
-	public WebElement pleaseWait_Text;
-	
-	
-	@FindBy(xpath = "//span[contains(., 'Your Oh! Jobs PH account has been successfully created')]")
-	public WebElement successfullyCreated_Text;
-	
-	@FindBy(css = "[class*='alert alert-success']")
-	//@FindBy(xpath = "//*[text()[contains(.,'Creating your Oh Jobs account')]]")
-	public WebElement success;
+	@FindBy(xpath = "//div[@class='alert alert-success' and contains(text(),'Your Oh! Jobs PH account has been successfully created')]")
+	public List<WebElement> successfullyCreated_Text;
 	
 	@FindBy(id = "first_name")
 	private WebElement firstName_Textbox;
@@ -77,18 +68,22 @@ public class JobseekerSignUpPage extends base  {
 	@FindBy(id = "register")
 	private WebElement registerNow_Button;
 	
+	@FindBy(xpath = "//a[text()='Are you an Employer? Click here to sign up.']")
+	private WebElement employerSignUp_Linktext;
+	
 	
 	
 	public void setFirstName(ExtentTest logger, String firstName) throws InterruptedException
 	{
-		wait.until(ExpectedConditions.visibilityOf(firstName_Textbox)).clear();
-		//firstName_Textbox.clear();
+		webDriverWait().until(ExpectedConditions.visibilityOf(firstName_Textbox));
+		firstName_Textbox.clear();
 		firstName_Textbox.sendKeys(firstName);
 		logger.log(LogStatus.INFO, "<b>"+firstName+"</b> has been entered on the First Name field.");
 	}
 	
 	public void setLastName(ExtentTest logger, String lastName)
 	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(lastName_Textbox));
 		lastName_Textbox.clear();
 		lastName_Textbox.sendKeys(lastName);
 		logger.log(LogStatus.INFO, "<b>"+lastName+"</b> has been entered on the Lirst Name field.");
@@ -96,6 +91,7 @@ public class JobseekerSignUpPage extends base  {
 	
 	public void selectGender(ExtentTest logger, String gender)
 	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(gender_Dropdown));
 		Select select = new Select(gender_Dropdown);
 		select.selectByVisibleText(gender);
 		logger.log(LogStatus.INFO, "<b>"+gender+"</b> has been selected on the Gender field.");
@@ -103,6 +99,7 @@ public class JobseekerSignUpPage extends base  {
 	
 	public void selectBirthday(ExtentTest logger, String birthday)
 	{
+		webDriverWait().until(ExpectedConditions.visibilityOfAllElements(month_Dropdown, day_Dropdown, year_Dropdown));
 		List<String> getBday = Arrays.asList(birthday.split(","));
 		
 		Select selectMonth = new Select(month_Dropdown);
@@ -118,22 +115,10 @@ public class JobseekerSignUpPage extends base  {
 		logger.log(LogStatus.INFO, "<b>"+birthday.toString().replaceAll(",", "/")+"</b> has been selected on the Birthday field.");
 	}
 	
-	public void selectDay(ExtentTest logger, String day)
-	{
-		Select select = new Select(day_Dropdown);
-		select.selectByVisibleText(day);
-		logger.log(LogStatus.INFO, "<b>"+day+"</b> has been selected on the Day field.");
-	}
-	
-	public void selectYear(ExtentTest logger, String year)
-	{
-		Select select = new Select(year_Dropdown);
-		select.selectByVisibleText(year);
-		logger.log(LogStatus.INFO, "<b>"+year+"</b> has been selected on the Year field.");
-	}
 	
 	public void setEmailAddress(ExtentTest logger, String emailAddress)
 	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(emailAddress_Textbox));
 		emailAddress_Textbox.clear();
 		emailAddress_Textbox.sendKeys(emailAddress);
 		logger.log(LogStatus.INFO, "<b>"+emailAddress+"</b> has been entered on the Email Address field.");
@@ -141,6 +126,7 @@ public class JobseekerSignUpPage extends base  {
 	
 	public void setUsername(ExtentTest logger, String userName)
 	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(userName_Textbox));
 		userName_Textbox.clear();
 		userName_Textbox.sendKeys(userName);
 		logger.log(LogStatus.INFO, "<b>"+userName+"</b> has been entered on the Username field.");
@@ -148,6 +134,7 @@ public class JobseekerSignUpPage extends base  {
 	
 	public void setPassword(ExtentTest logger, String password)
 	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(passWord_Textbox));
 		passWord_Textbox.clear();
 		passWord_Textbox.sendKeys(password);
 		logger.log(LogStatus.INFO, "<b>"+password+"</b> has been entered on the Password field.");
@@ -155,6 +142,7 @@ public class JobseekerSignUpPage extends base  {
 
 	public void setConfirmPassword(ExtentTest logger, String confirmPassword)
 	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(confirmPassword_Textbox));
 		confirmPassword_Textbox.clear();
 		confirmPassword_Textbox.sendKeys(confirmPassword);
 		logger.log(LogStatus.INFO, "<b>"+confirmPassword+"</b> has been entered on the Confirm Password field.");
@@ -162,23 +150,33 @@ public class JobseekerSignUpPage extends base  {
 	
 	public void clickIAgree(ExtentTest logger)
 	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(iAgree_Checkbox));
 		iAgree_Checkbox.click();
 		logger.log(LogStatus.INFO, "<b>I agree to the Privacy Policy and Term of Use checkbox</b> has been clicked.");
 	}
 	
 	public void clickRegisterNow(ExtentTest logger)
 	{
+		
+		webDriverWait().until(ExpectedConditions.visibilityOf(registerNow_Button));
 		registerNow_Button.click();
 		logger.log(LogStatus.INFO, "<b>Register Now button</b> has been clicked.");
 	}
 	
+	public void clickEmployerSignUp(ExtentTest logger)
+	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(employerSignUp_Linktext));
+		employerSignUp_Linktext.click();
+		logger.log(LogStatus.INFO, "<b>Are you an Employer? Click here to sign up.</b> link text has been clicked.");
+	}
+
 	
 	//VERIFICATION//
 	
 	public boolean verifySuccessMessage(String message)
 	{
-		String firstMessage = pleaseWait_Text.getText();
-		String secondMessage = successfullyCreated_Text.getText();
+		String firstMessage = pleaseWait_Text.get(1).getText().replace("×"+"\n", "");
+		String secondMessage = successfullyCreated_Text.get(1).getText().replace("×"+"\n", "");
 		System.out.println(firstMessage);
 		System.out.println(secondMessage);
 		boolean a= false;
@@ -188,6 +186,7 @@ public class JobseekerSignUpPage extends base  {
 		
 		for(int i=0; i<successMessage.size(); i++)
 		{
+			
 			if(firstMessage.equalsIgnoreCase(successMessage.get(0).toString()) && secondMessage.equalsIgnoreCase(successMessage.get(1).toString()))
 			{
 				a = true;

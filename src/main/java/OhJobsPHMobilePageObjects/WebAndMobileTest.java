@@ -6,7 +6,7 @@ import static org.testng.Assert.assertTrue;
 import java.awt.image.SampleModel;
 import java.io.IOException;
 
-import org.apache.tools.ant.taskdefs.optional.clearcase.CCCheckin;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;

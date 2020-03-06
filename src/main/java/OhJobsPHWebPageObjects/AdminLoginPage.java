@@ -33,7 +33,6 @@ public class AdminLoginPage extends base {
 	public void setEmailAddress(com.relevantcodes.extentreports.ExtentTest logger, String email)
 	{
 		webDriverWait().until(ExpectedConditions.visibilityOf(emailAddress_Textbox));
-		emailAddress_Textbox.clear();
 		emailAddress_Textbox.sendKeys(email);
 		logger.log(LogStatus.INFO, "<b>"+email+"</b> has been entered on the Email Address field.");
 	}
@@ -41,14 +40,12 @@ public class AdminLoginPage extends base {
 	public void setPassword(ExtentTest logger, String password)
 	{
 		webDriverWait().until(ExpectedConditions.visibilityOf(password_Textbox));
-		password_Textbox.clear();
 		password_Textbox.sendKeys(password);
 		logger.log(LogStatus.INFO, "<b>"+password+"</b> has been entered on the Password field.");
 	}
 	
 	public void clickLogin(ExtentTest logger) 
 	{
-		
 		login_Button.click();
 		logger.log(LogStatus.INFO, "<b>Login button</b> has been clicked.");
 	}

@@ -2,6 +2,8 @@ package resources;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -90,16 +92,19 @@ public class Xls_Reader {
 			if (cell.getCellType() == CellType.STRING)
 				return cell.getStringCellValue();
 			else if (cell.getCellType() == CellType.NUMERIC || cell.getCellType() == CellType.FORMULA) {
-
-				String cellText = String.valueOf(cell.getNumericCellValue());
+				
+				//String cellText = String.valueOf(cell.getNumericCellValue());
+				String cellText = String.valueOf(cell.getDateCellValue());
 				if (HSSFDateUtil.isCellDateFormatted(cell)) {
 					// format in form of M/D/YY
 					double d = cell.getNumericCellValue();
-
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(HSSFDateUtil.getJavaDate(d));
-					cellText = (String.valueOf(cal.get(Calendar.YEAR))).substring(2);
-					cellText = cal.get(Calendar.MONTH) + 1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cellText;
+					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+					cellText =  sdf.format(cell.getDateCellValue());
+					
+					//Calendar cal = Calendar.getInstance();
+					//cal.setTime(HSSFDateUtil.getJavaDate(d));
+					//cellText = (String.valueOf(cal.get(Calendar.YEAR))).substring(2);
+					//cellText = cal.get(Calendar.MONTH) + 1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cellText;
 
 				}
 

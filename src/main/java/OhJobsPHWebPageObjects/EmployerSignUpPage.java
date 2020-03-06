@@ -1,29 +1,40 @@
 package OhJobsPHWebPageObjects;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class EmployerSignUpPage {
+import resources.Utilities;
+import resources.base;
+
+public class EmployerSignUpPage extends base {
 	
 	public EmployerSignUpPage(WebDriver driver)
 	{
 		PageFactory.initElements(driver, this);
 	}
-	
-	@FindBy(css = "[class*='alert-success']")
-	private WebElement successMessage_Text;
-	
-	@FindBy(xpath = "//*[text()[contains(.,'Please wait')]]")
+	@FindBy(xpath = "//*[text()[contains(.,'Signing up...')]]")
+	//@FindBy(xpath = "//div[@class='alert alert-success' and contains(text(),'Signing up...Please wait  ')]")
 	private WebElement successMessage1_Text;
 	
-	@FindBy(xpath = "//*[text()[contains(.,'Your information has been registered.')]]")
+	@FindBy(xpath = "//*[text()[contains(.,'You can now login to your account.')]]")
+	//@FindBy(xpath = "//div[@class='alert alert-success' and contains(text(),'You can now login to your account.')]")
 	private WebElement successMessage2_Text;
+	
+	@FindBy(css = "[class='alert alert-success']")
+	private List<WebElement> successMessage_Text;
+	
+	@FindBy(css = "[class='alert alert-success']")
+	private WebElement successMessages_Text;
 	
 	@FindBy(name = "emp-name")
 	private WebElement employerName_Textbox;
@@ -60,6 +71,19 @@ public class EmployerSignUpPage {
 	
 	@FindBy(className = "link-to-emp-login")
 	private WebElement clickHereToLogin_Linktext;
+	
+	public WebElement getVisibleElement(List<WebElement> elements)
+	{
+		WebElement ele = null;
+		for(WebElement element : elements)
+		{
+			if(element.isDisplayed())
+			{
+				ele = element;
+			}
+		}
+		return ele;
+	}
 	
 	public void setEmployerName(ExtentTest logger, String employerName)
 	{
@@ -141,5 +165,41 @@ public class EmployerSignUpPage {
 		clickHereToLogin_Linktext.click();
 		logger.log(LogStatus.INFO, "<b>Already have an account? Click here to login link text</b> has been clicked.");
 	}
-
+	
+	public void verifySuccessMessage()
+	{
+		Utilities utilities = new Utilities(driver);
+		System.out.println(utilities.getVisibleElement(successMessage_Text).getText());
+	}
+	
+	
+	public void getSuccessMessage()
+	{
+		Utilities utilities = new Utilities(driver);
+		String a = utilities.getVisibleElement(successMessage_Text).getText();
+		String b = utilities.getVisibleElement(successMessage_Text).getText();
+		
+		System.out.println(a);
+		System.out.println(b);
+		webDriverWait().until(ExpectedConditions.invisibilityOfAllElements(utilities.getVisibleElement(successMessage_Text)));
+	}
+	public boolean verifySuccessMessage(String message)
+	{
+		String firstMessage = successMessage1_Text.getText().replaceAll("×"+"\n", "");
+		String secondMessage = successMessage2_Text.getText().replaceAll("×"+"\n", "");
+		boolean a=false;
+		
+		List<String> getSuccessMessage = Arrays.asList(message.split(","));
+		
+		System.out.println(firstMessage);
+		System.out.println(secondMessage);
+		
+		if(firstMessage.equalsIgnoreCase(getSuccessMessage.get(0).toString()))
+		{
+			a = true;
+			System.out.println(getSuccessMessage.toString().replaceAll("×"+"\n", ""));
+		}
+		
+		return a;
+	}
 }

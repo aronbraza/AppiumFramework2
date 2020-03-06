@@ -1,38 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
-  <test thread-count="5" name="GoogleChrome(failed)">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Oh Jobs PH Mobile and Website Flow(failed)">
     <parameter name="inputsheetname" value="Input.xlsx"/>
     <parameter name="testcaseName" value="Login"/>
-    <parameter name="browserName" value="Chrome"/>
     <classes>
       <class name="OhJobsPHTest.OhJobsPhTest">
         <methods>
+          <include name="employerAddJob"/>
+          <include name="employerLoginWeb"/>
           <include name="getSuiteName"/>
           <include name="setInputSheetName"/>
           <include name="initializeDriver"/>
-          <include name="jobseekerLoginWeb"/>
           <include name="setUp"/>
           <include name="tearDown"/>
         </methods>
       </class> <!-- OhJobsPHTest.OhJobsPhTest -->
     </classes>
-  </test> <!-- GoogleChrome(failed) -->
-  <test thread-count="5" name="MozillaFirefox(failed)">
-    <parameter name="inputsheetname" value="Input.xlsx"/>
-    <parameter name="testcaseName" value="Login"/>
-    <parameter name="browserName" value="Firefox"/>
-    <classes>
-      <class name="OhJobsPHTest.OhJobsPhTest">
-        <methods>
-          <include name="getSuiteName"/>
-          <include name="setInputSheetName"/>
-          <include name="initializeDriver"/>
-          <include name="jobseekerLoginWeb"/>
-          <include name="setUp"/>
-          <include name="tearDown"/>
-        </methods>
-      </class> <!-- OhJobsPHTest.OhJobsPhTest -->
-    </classes>
-  </test> <!-- MozillaFirefox(failed) -->
+  </test> <!-- Oh Jobs PH Mobile and Website Flow(failed) -->
 </suite> <!-- Failed suite [Suite] -->

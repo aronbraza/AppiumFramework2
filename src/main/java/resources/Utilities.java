@@ -12,7 +12,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -29,13 +32,25 @@ public class Utilities extends base{
 	public void OpenNewTab(ExtentTest logger, String link) throws InterruptedException
 	{
 	    ((JavascriptExecutor) driver).executeScript("window.open('"+link+"')");
-		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(tabs.get(1));
+		//ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+		switchNextTab(logger);
+		//driver.switchTo().window(tabs.get(1));
 		logger.log(LogStatus.INFO, "Open a new tab on the browser and navigated to the <b>"+driver.getTitle()+"</b>");
 	}
 	
+	public void switchNextTab(ExtentTest logger)
+	{
+		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(0));
+	    driver.close();
+	    driver.switchTo().window(tabs.get(1));
+	    logger.log(LogStatus.INFO, "Switch to the other tab and navigated to the <b>"+driver.getTitle()+"</b>");
+	}
+
+
 	public void switchToNextTab(ExtentTest logger) throws InterruptedException
 	{
+		
 	    
 	    //String winHandleBefore = driver.getWindowHandle();
 		Set<String> allTab = driver.getWindowHandles();
@@ -57,7 +72,7 @@ public class Utilities extends base{
 			driver.switchTo().window(winHandle);
 		}
 		logger.log(LogStatus.INFO, "Switch to the other tab and navigated to the <b>"+driver.getTitle()+"</b>");
-		
+		System.out.println(driver.getWindowHandles().size());
 	}
 	
 	public void CloseNewTab(ExtentTest logger) throws InterruptedException
@@ -91,5 +106,23 @@ public class Utilities extends base{
 		return ConvertStartDate;
 		
 	}
+	
+	public WebElement getVisibleElement(List<WebElement> elements)
+	{
+		
+		WebElement ele =null;
+		
+		
+		for(int i=0; i<elements.size(); i++)
+		{
+			if(elements.get(i).isDisplayed())
+			{
+				ele = elements.get(i);
+			}
+		}
+		return ele;
+	}
+	
+	
 
 }

@@ -8,14 +8,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
+import resources.base;
 
 
 
-public class JobseekerJobDetailsPage {
+
+public class JobseekerJobDetailsPage extends base {
 	
 	public JobseekerJobDetailsPage(WebDriver driver)
 	{
@@ -31,9 +34,34 @@ public class JobseekerJobDetailsPage {
 	@FindBy(className = "main-desc-content")
 	private List<WebElement> mainContent_Text;
 	
+	@FindBy(className = "main-btn-apply")
+	private WebElement applyNow_Button;
+	
+	@FindBy(css = "[class='pop-up-field-pitch col-md-12 form-control']")
+	private WebElement pitch_Textbox;
+	
+	@FindBy(id = "submit-application")
+	private WebElement submit_Button;
 	
 
+	public void clickApplyNow(ExtentTest logger)
+	{
+		applyNow_Button.click();
+		logger.log(LogStatus.INFO, "<b>Apply Now button</b> has been clicked.");
+	}
 	
+	public void setWriteYouPitch(ExtentTest logger, String pitch)
+	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(pitch_Textbox));
+		pitch_Textbox.sendKeys(pitch);
+		logger.log(LogStatus.INFO, "<b>"+pitch+"</b> has been entered on the Write your pitch field.");
+	}
+	
+	public void clickSubmit(ExtentTest logger)
+	{
+		submit_Button.click();
+		logger.log(LogStatus.INFO, "<b>Submit button</b> has been clicked.");
+	}
 	
 	
 	public boolean verifyJobTitle(String jobTitle)

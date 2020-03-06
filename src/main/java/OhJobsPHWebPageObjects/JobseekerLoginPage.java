@@ -1,5 +1,7 @@
 package OhJobsPHWebPageObjects;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,6 +21,12 @@ public class JobseekerLoginPage extends base {
 	{
 		PageFactory.initElements(driver, this);
 	}
+	
+	@FindBy(className = "loginmodal-container")
+	private WebElement loginModal;
+	
+	@FindBy(xpath = "//div[@class='alert alert-success' and contains(text(),'successfully logged in')]")
+	public List<WebElement> successMessage_Text;
 	
 	@FindBy(id = "login_username")
 	private WebElement userNameOrEmail_Textbox;
@@ -48,7 +56,6 @@ public class JobseekerLoginPage extends base {
 	public void setUsernameOrEmail(ExtentTest logger, String userNameOrEmail)
 	{
 		webDriverWait().until(ExpectedConditions.visibilityOf(userNameOrEmail_Textbox));
-		userNameOrEmail_Textbox.clear();
 		userNameOrEmail_Textbox.sendKeys(userNameOrEmail);
 		logger.log(LogStatus.INFO, "<b>"+userNameOrEmail+"</b> has been entered on the Username or Email Address field.");
 	}
@@ -56,7 +63,6 @@ public class JobseekerLoginPage extends base {
 	public void setPassword(ExtentTest logger, String password)
 	{
 		webDriverWait().until(ExpectedConditions.visibilityOf(password_Textbox));
-		password_Textbox.clear();
 		password_Textbox.sendKeys(password);
 		logger.log(LogStatus.INFO, "<b>"+password+"</b> has been entered on the Password field.");
 	}
@@ -95,6 +101,22 @@ public class JobseekerLoginPage extends base {
 	{
 		close_Button.click();
 		logger.log(LogStatus.INFO, "<b>Close button</b> has been clicked.");
+	}
+	
+	public boolean verifySuccessMessage(String message)
+	{
+		boolean a=false;
+		
+		String successMessage = successMessage_Text.get(0).getText();
+		System.out.println(successMessage);
+		
+		if(successMessage.contains(message))
+		{
+			a = true;
+			System.out.println(message);
+			webDriverWait().until(ExpectedConditions.invisibilityOf(loginModal));
+		}
+		return a;
 	}
 
 

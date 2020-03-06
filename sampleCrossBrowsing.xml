@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Cross Browsing Suite"  parallel="none">
+<suite name="Cross Browsing Suite" thread-count="5"  parallel="none">
 
 <test name="GoogleChrome">
 <parameter name="browserName" value="Chrome"></parameter>
@@ -10,7 +10,7 @@
 <classes>
       <class name="OhJobsPHTest.OhJobsPhTest">
       <methods>
-     <include name="jobseekerSignUpWeb"/>
+     <include name="jobseekerLoginWeb"/>
       </methods>
        </class>
     </classes>
@@ -24,7 +24,7 @@
 <classes>
       <class name="OhJobsPHTest.OhJobsPhTest">
       <methods>
-     <include name="jobseekerSignUpWeb"/>
+     <include name="jobseekerLoginWeb"/>
       </methods>
        </class>
     </classes>

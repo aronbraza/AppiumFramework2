@@ -8,6 +8,7 @@ import java.awt.Checkbox;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -24,22 +25,30 @@ import OhJobsPHMobilePageObjects.HomePage;
 import OhJobsPHMobilePageObjects.JobDetailsPage;
 import OhJobsPHMobilePageObjects.JobsPage;
 import OhJobsPHMobilePageObjects.LoginPage;
+import OhJobsPHMobilePageObjects.SignUpPage;
+import OhJobsPHMobilePageObjects.UserProfilePage;
 import OhJobsPHWebPageObjects.AdminLoginPage;
-import OhJobsPHWebPageObjects.DatabaseTestingBase;
+import OhJobsPHWebPageObjects.DatabaseQuery;
 import OhJobsPHWebPageObjects.EmployerHomePage;
 import OhJobsPHWebPageObjects.EmployerJobPostingPage;
+import OhJobsPHWebPageObjects.EmployerManageApplicants;
+import OhJobsPHWebPageObjects.EmployerProfilePage;
 import OhJobsPHWebPageObjects.EmployerSignUpPage;
 import OhJobsPHWebPageObjects.GmailPage;
 import OhJobsPHWebPageObjects.JobseekerHomePage;
+import OhJobsPHWebPageObjects.JobseekerInboxPage;
 import OhJobsPHWebPageObjects.JobseekerJobDetailsPage;
 import OhJobsPHWebPageObjects.JobseekerJobsListPage;
 import OhJobsPHWebPageObjects.JobseekerLoginPage;
+import OhJobsPHWebPageObjects.JobseekerNotificationPage;
 import OhJobsPHWebPageObjects.JobseekerSignUpPage;
 import OhJobsPHWebPageObjects.JobseekerUserProfilePage;
 import OhJobsPHWebPageObjects.NadaEmailPage;
 import OhJobsPHWebPageObjects.WebmasterHomePage;
 import OhJobsPHWebPageObjects.WebmasterManageJobPostsPage;
+import OhJobsPHWebPageObjects.db_Base;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import resources.Utilities;
@@ -51,22 +60,18 @@ public class OhJobsPhTest extends base {
 			
 	
 	@BeforeTest
-	@Parameters("browserName")
-	public void initializeDriver(String browserName) throws IOException, InterruptedException, ClassNotFoundException, SQLException
+	//@Parameters("browserName")
+	public void initializeDriver() throws IOException, InterruptedException, ClassNotFoundException, SQLException
 	{
-		String emailAddress = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Email Address");
-		DatabaseTestingBase db = new DatabaseTestingBase();
-		db.deleteQuery(emailAddress);
-		
 		ExtentTest logger = extent.startTest("Open Browser");
-		//navigateToOhJobsPhAdminPage(logger);
-		initializeDriverForCrossBrowsing(logger, browserName);
+		navigateTest(logger);
+		//initializeDriverForCrossBrowsing(logger, browserName);
 		//KillNode();
 		extent.endTest(logger);
 		extent.flush();
 	}
 	
-	@Test(priority = 1)
+	@Test(priority = 6)
 	public void jobseekerSignUpWeb()
 	{
 		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Sign Up");
@@ -74,10 +79,11 @@ public class OhJobsPhTest extends base {
 		{
 			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
 			JobseekerSignUpPage jobseekerSignUpPage = new JobseekerSignUpPage(driver);
+			JobseekerLoginPage jobseekerLoginPage = new JobseekerLoginPage(driver);
 			NadaEmailPage nadaEmailPage = new NadaEmailPage(driver);
 			Utilities utilities = new Utilities(driver);
 			
-			
+			String getNadaURL = inputData.get("Oh Jobs PH Test Data").get("Get Nada URL");
 			String firstName = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) First Name");
 			String lastName = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Last Name");
 			String gender = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Gender");
@@ -86,9 +92,9 @@ public class OhJobsPhTest extends base {
 			String userName = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Username");
 			String password = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Password");
 			String confirmPassword = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Confirm Password");
-			//String successMessage = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Sign Up Success Message");
+			String successMessage = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Success Message");
 			
-			
+			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/");
 			jobseekerHomePage.clickSignUp(logger);
 			jobseekerSignUpPage.setFirstName(logger, firstName);
 			jobseekerSignUpPage.setLastName(logger, lastName);
@@ -100,18 +106,16 @@ public class OhJobsPhTest extends base {
 			jobseekerSignUpPage.setConfirmPassword(logger, confirmPassword);
 			jobseekerSignUpPage.clickIAgree(logger);
 			jobseekerSignUpPage.clickRegisterNow(logger);
-			utilities.OpenNewTab(logger, "https://getnada.com/msg");
+			softAssert.assertTrue(jobseekerSignUpPage.verifySuccessMessage(successMessage));
+			utilities.OpenNewTab(logger, getNadaURL);
 			nadaEmailPage.clickAddInbox();
 			nadaEmailPage.setName(emailAddress.replaceAll("@zetmail.com", ""));
 			nadaEmailPage.setDomain(emailAddress.substring(emailAddress.length() - 11));
 			nadaEmailPage.clickAccept();
-			nadaEmailPage.findAndClickMessage("Your Oh! Jobs.ph account has been successfully created");
-			nadaEmailPage.clickLoginAs();
-			utilities.switchToNextTab(logger);
+			nadaEmailPage.findAndClickMessage(logger,"Your Oh! Jobs.ph account has been successfully created");
+			nadaEmailPage.clickLoginAs(logger);
+			utilities.switchNextTab(logger);
 			
-			
-			
-			//assertTrue(jobseekerSignUpPage.verifySuccessMessage(successMessage));
 		}
 		catch (Exception | AssertionError e) 
 		{
@@ -123,7 +127,7 @@ public class OhJobsPhTest extends base {
 		extent.flush();
 	}
 	
-	@Test(priority = 2)
+	@Test(priority = 7)
 	public void jobseekerLoginWeb()
 	{
 		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Login");
@@ -131,15 +135,18 @@ public class OhJobsPhTest extends base {
 		{
 			String emailAddress = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Email Address");
 			String password = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Password");
+			String successMessage = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Login) Success Message");
 			
 			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
 			JobseekerLoginPage jobseekerLoginPage = new JobseekerLoginPage(driver);
+			Utilities utilities = new Utilities(driver);
+			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/");
 			
 			jobseekerHomePage.clickLogin(logger);
-			jobseekerLoginPage.setUsernameOrEmail(logger, emailAddress);
-			jobseekerLoginPage.setPassword(logger, password);
+			jobseekerLoginPage.setUsernameOrEmail(logger, "aronbraza");
+			jobseekerLoginPage.setPassword(logger, "Wog12345");
 			jobseekerLoginPage.clickLogin(logger);
-			Thread.sleep(6000);
+			softAssert.assertTrue(jobseekerLoginPage.verifySuccessMessage(successMessage));
 		}
 		catch (Exception | AssertionError e) 
 		{
@@ -172,7 +179,7 @@ public class OhJobsPhTest extends base {
 			
 			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
 			JobseekerUserProfilePage jobseekerUserProfilePage = new JobseekerUserProfilePage(driver);
-			
+
 			jobseekerHomePage.clickUserDropdown(logger);
 			jobseekerHomePage.clickUserProfile(logger);
 			jobseekerUserProfilePage.clickEditPersonalInformation(logger);
@@ -198,8 +205,8 @@ public class OhJobsPhTest extends base {
 			extent.flush();
 	}
 	
-	@Test
-	public void obseekerEditIntroductionWeb() 
+	@Test(priority = 3)
+	public void jobseekerEditIntroductionWeb() 
 	{
 		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Edit Introduction");
 		try 
@@ -209,6 +216,8 @@ public class OhJobsPhTest extends base {
 			
 			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
 			JobseekerUserProfilePage jobseekerUserProfilePage = new JobseekerUserProfilePage(driver);
+			Utilities utilities = new Utilities(driver);
+			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/");
 			
 			jobseekerHomePage.clickUserDropdown(logger);
 			jobseekerHomePage.clickUserProfile(logger);
@@ -363,14 +372,17 @@ public class OhJobsPhTest extends base {
 		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Add Other Information");
 		try 
 		{
+			String otherInformation = inputData.get("Oh Jobs PH Test Data").get("Jobseeker(Other Information) Other Information");
+			String aboutOtherInformation = inputData.get("Oh Jobs PH Test Data").get("Jobseeker(Other Information) About Other Information");
+			
 			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
 			JobseekerUserProfilePage jobseekerUserProfilePage = new JobseekerUserProfilePage(driver);
 			
 			jobseekerHomePage.clickUserDropdown(logger);
 			jobseekerHomePage.clickUserProfile(logger);
 			jobseekerUserProfilePage.clickAddOtherInformation_Icon(logger);
-			jobseekerUserProfilePage.setOtherInformation(logger, "Selenium");
-			jobseekerUserProfilePage.setAboutOtherInformation(logger, "Sample about");
+			jobseekerUserProfilePage.setOtherInformation(logger, otherInformation);
+			jobseekerUserProfilePage.setAboutOtherInformation(logger, aboutOtherInformation);
 			jobseekerUserProfilePage.clickSaveOtherInformation(logger);
 		}
 		catch (Exception | AssertionError e) 
@@ -384,22 +396,81 @@ public class OhJobsPhTest extends base {
 		
 	}
 	
-	
-	@Test(priority = 1)
-	public void loginAsEmployer()
+	@Test(priority = 10)
+	public void jobseekerSendMessageToEmployer()
 	{
-		ExtentTest logger = extent.startTest("<b>Employer</b>: Login");
+		ExtentTest logger = extent.startTest("<b>Employer</b>: Approved Jobseeker Application");
 		try 
 		{
-			AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
+			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
+			JobseekerInboxPage jobseekerInboxPage = new JobseekerInboxPage(driver);
+			Utilities utilities = new Utilities(driver);
 			
-			String email = inputData.get("Oh Jobs PH Test Data").get("Employer Username");
-			String password = inputData.get("Oh Jobs PH Test Data").get("Employer Password");
-			
-			adminLoginPage.setEmailAddress(logger, email);
-			adminLoginPage.setPassword(logger, password);
-			adminLoginPage.clickLogin(logger);
+			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/admin");
+			jobseekerHomePage.clickMessage(logger);
+			jobseekerInboxPage.findAndClickEmployer(logger, "Web Outsourcing Gateway Inc.");
+			jobseekerInboxPage.setMessage(logger, "Test lang din");
+			jobseekerInboxPage.clickSend(logger);
+		} 
+		catch (Exception | AssertionError e) 
+		{
+			e.printStackTrace();
+			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+					+ e.getMessage() + "</b>");
 		}
+		extent.endTest(logger);
+		extent.flush();
+	}
+	
+	@Test
+	public void jobseekerEditPersonalInformationMobile()
+	{
+		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Edit Personal Information (Mobile App)");
+		try 
+		{
+			service = startServer();
+			AndroidDriver<WebElement> androidDriver = Capabilities();
+			HomePage homePage = new HomePage(androidDriver);
+			LoginPage loginPage = new LoginPage(androidDriver);
+			UserProfilePage userProfilePage = new UserProfilePage(androidDriver);
+			
+			homePage.clickLogin(logger);
+			loginPage.setUsername(logger, "aronbraza");
+			loginPage.setPassword(logger, "Wog12345");
+			loginPage.clickLogin_Button(logger);
+			homePage.clickMenu(logger);
+			homePage.clickUserProfile(logger);
+			userProfilePage.clickEditPersonalInformationIcon();
+			//userProfilePage.setFirstName(logger, "WOG WOG WOG");
+			userProfilePage.setBirthdate(logger);
+			Thread.sleep(5000);
+		} 
+		catch (Exception | AssertionError e) 
+		{
+			e.printStackTrace();
+			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+					+ e.getMessage() + "</b>");
+		}
+		extent.endTest(logger);
+		extent.flush();
+	}
+	
+	@Test(priority = 11)
+	public void jobseekerCheckApprovedJobNotification()
+	{
+		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Check Approved Job Notification");
+		try 
+		{
+			String jobTitle = inputData.get("Oh Jobs PH Test Data").get("Job Title");
+			
+			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
+			JobseekerNotificationPage jobseekerNotificationPage = new JobseekerNotificationPage(driver);
+			Utilities utilities = new Utilities(driver);
+			
+			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/");
+			jobseekerHomePage.clickNotification(logger);
+			jobseekerNotificationPage.getApprovedJobApplicationNotif(jobTitle);
+		} 
 		catch (Exception | AssertionError e) 
 		{
 			e.printStackTrace();
@@ -411,7 +482,217 @@ public class OhJobsPhTest extends base {
 	}
 	
 	
+	
+	@Test(priority = 8)
+	public void jobseekerApplyJobOnWeb()
+	{
+		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Apply Jobs");
+		try 
+		{
+		String jobTitle = inputData.get("Oh Jobs PH Test Data").get("Job Title");
+		 JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
+		 JobseekerJobsListPage jobseekerJobsListPage = new JobseekerJobsListPage(driver);
+		 JobseekerJobDetailsPage jobseekerJobDetailsPage = new JobseekerJobDetailsPage(driver);
+		 
+		 jobseekerHomePage.clickJobs(logger);
+		 jobseekerJobsListPage.findApprovedJob(logger,jobTitle);
+		 jobseekerJobDetailsPage.clickApplyNow(logger);
+		 jobseekerJobDetailsPage.setWriteYouPitch(logger, "Good morning test apply lang.");
+		 jobseekerJobDetailsPage.clickSubmit(logger);
+		 
+		 
+		}
+		catch (Exception | AssertionError e) 
+		{
+			e.printStackTrace();
+			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+					+ e.getMessage() + "</b>");
+		}
+		extent.endTest(logger);
+		extent.flush();
+		 
+		
+	}
+	
+	@Test(priority = 4)
+	public void jobseekerApplyJobOnMobile() throws InterruptedException, IOException
+	{
+		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Apply on one of the job using Oh Jobs PH Mobile app");
+		try 
+		{
+			service = startServer();
+			AndroidDriver<WebElement> androidDriver = Capabilities();
+			HomePage homePage = new HomePage(androidDriver);
+			LoginPage loginPage = new LoginPage(androidDriver);
+			JobsPage jobsPage = new JobsPage(androidDriver);
+			JobDetailsPage jobDetailsPage = new JobDetailsPage(androidDriver);
+			SignUpPage signUpPage = new SignUpPage(androidDriver);
+			//homePage.clickLogin(logger);
+			//loginPage.setUsername(logger, "aronbraza");
+			//loginPage.setPassword(logger, "Wog12345");
+			//loginPage.clickLogin_Button(logger);
+			homePage.clickFindAJob(logger);
+			jobsPage.findAndClickJob(logger,"C# Developer");
+			jobDetailsPage.getJD();
+			
+			
+			
+			//jobsPage.getJobList();
+			service.stop();
+		}
+			catch (Exception | AssertionError e) 
+			{
+				e.printStackTrace();
+				logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+						+ e.getMessage() + "</b>");
+			}
+			extent.endTest(logger);
+			extent.flush();
+		}
+	
+	
+	
+	@Test(priority = 1)
+	public void employerSignUp()
+	{
+		ExtentTest logger = extent.startTest("<b>Employer</b>: Sign Up");
+		try 
+		{
+			String getNadaURL = inputData.get("Oh Jobs PH Test Data").get("Get Nada URL");
+			String employerName = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Employer Name");
+			String employerType = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Employer Type");
+			String employerIndustry = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Employer Industry");
+			String representative = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Representative");
+			String country = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Country");
+			String address = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Address");
+			String emailAddress = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Email Address");
+			String password = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Password");
+			String confirmPassword = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Confirm Password");
+			
+			JobseekerSignUpPage jobseekerSignUpPage = new JobseekerSignUpPage(driver);
+			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
+			AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
+			EmployerSignUpPage employerSignUpPage = new EmployerSignUpPage(driver);
+			NadaEmailPage nadaEmailPage = new NadaEmailPage(driver);
+			Utilities utilities = new Utilities(driver);
+			
+			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/employers-signup");
+			//jobseekerHomePage.clickSignUp(logger);
+			//jobseekerSignUpPage.clickEmployerSignUp(logger);
+			employerSignUpPage.setEmployerName(logger, employerName);
+			employerSignUpPage.setEmployerType(logger, employerType);
+			employerSignUpPage.setEmployerIndustry(logger, employerIndustry);
+			employerSignUpPage.setRepresentative(logger, representative);
+			employerSignUpPage.setCountry(logger, country);
+			employerSignUpPage.setAddress(logger, address);
+			employerSignUpPage.setEmailAddress(logger, emailAddress);
+			employerSignUpPage.setPassword(logger, password);
+			employerSignUpPage.setConfirmPassword(logger, confirmPassword);
+			employerSignUpPage.clickIAgree(logger);
+			employerSignUpPage.clickSignUp(logger);
+			employerSignUpPage.verifySuccessMessage();
+			employerSignUpPage.getSuccessMessage();
+			//softAssert.assertTrue(employerSignUpPage.verifySuccessMessage("Signing up...Please wait  ,Your information has been registered. You can now login to your account. Thank you."));
+	
+			utilities.OpenNewTab(logger, getNadaURL);
+			nadaEmailPage.clickAddInbox();
+			nadaEmailPage.setName(emailAddress.replaceAll("@zetmail.com", ""));
+			nadaEmailPage.setDomain(emailAddress.substring(emailAddress.length() - 11));
+			nadaEmailPage.clickAccept();
+			nadaEmailPage.findAndClickMessage(logger,"Oh! Jobs.ph: Sign up Confirmation");
+			nadaEmailPage.clickLoginAs(logger);
+			utilities.switchNextTab(logger);
+			
+		}
+		catch (Exception | AssertionError e) 
+		{
+			e.printStackTrace();
+			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+					+ e.getMessage() + "</b>");
+		}
+		extent.endTest(logger);
+		extent.flush();
+	}
+	
 	@Test(priority = 2)
+	public void employerLoginWeb()
+	{
+		ExtentTest logger = extent.startTest("<b>Employer</b>: Login");
+		try 
+		{
+			
+			AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
+			Utilities utilities = new Utilities(driver);
+			String email = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Email Address");
+			String password = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Password");
+			//utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/admin");
+			adminLoginPage.setEmailAddress(logger, email);
+			adminLoginPage.setPassword(logger, password);
+			adminLoginPage.clickLogin(logger);
+			
+		}
+		catch (Exception | AssertionError e) 
+		{
+			e.printStackTrace();
+			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+					+ e.getMessage() + "</b>");
+		}
+		extent.endTest(logger);
+		extent.flush();
+	}
+	
+	@Test(priority = 3)
+	public void employerEditProfile()
+	{
+		ExtentTest logger = extent.startTest("<b>Employer</b>: Edit Profile");
+		try 
+		{
+		
+		//Test Data//
+		String representative = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Representative");
+		String details = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Details");
+		String contactDetails = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Contact Details");
+		String businessHours = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Business Hours");
+		String faxNumber = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Fax Number");
+		String website = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Website");
+		String country = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Country");
+		String address = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Address");
+		String industry = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Industry");
+		String successMessage = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Success Message");
+			
+			
+		EmployerHomePage employerHomePage = new EmployerHomePage(driver);
+		EmployerProfilePage employerProfilePage = new EmployerProfilePage(driver);
+		
+		employerHomePage.clickDropdown(logger);
+		employerHomePage.clickProfile(logger);
+		employerProfilePage.clickEditProfile(logger);
+		employerProfilePage.setRepresentative(logger, representative);
+		employerProfilePage.setDetails(logger, details);
+		employerProfilePage.setContactDetails(logger, contactDetails);
+		employerProfilePage.setBusinessHours(logger, businessHours);
+		employerProfilePage.setFaxNumber(logger, faxNumber);
+		employerProfilePage.setWebsite(logger, website);
+		employerProfilePage.setCountry(logger, country);
+		employerProfilePage.setAddress(logger, address);
+		employerProfilePage.setIndustry(logger, industry);
+		employerProfilePage.uploadSecCertificate(logger);
+		employerProfilePage.clickUpdateProfile(logger);
+		softAssert.assertTrue(employerProfilePage.verifySuccessMessage(successMessage));
+		}
+		catch (Exception | AssertionError e) 
+		{
+			e.printStackTrace();
+			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+					+ e.getMessage() + "</b>");
+		}
+		extent.endTest(logger);
+		extent.flush();
+		
+	}
+	
+	
+	@Test(priority = 4)
 	public void employerAddJob()
 	{
 		ExtentTest logger = extent.startTest("<b>Employer</b>: Add Job");
@@ -431,7 +712,7 @@ public class OhJobsPhTest extends base {
 			String industry = inputData.get("Oh Jobs PH Test Data").get("Industry");
 			String skills = inputData.get("Oh Jobs PH Test Data").get("Required Skills");
 			String jobTags = inputData.get("Oh Jobs PH Test Data").get("Job Tags");
-			String openingDate = inputData.get("Oh Jobs PH Test Data").get("Opening Date");
+			String openingDate = inputData.get("Oh Jobs PH Test Data").get("Opening Date").toString();
 			String closingDate = inputData.get("Oh Jobs PH Test Data").get("Closing Date");
 			String addJobSuccessMessages = inputData.get("Oh Jobs PH Test Data").get("Add Job Success Message");
 			
@@ -458,7 +739,7 @@ public class OhJobsPhTest extends base {
 			employerJobPostingPage.setClosingDate(logger, closingDate);
 			employerJobPostingPage.clickSubmitJob(logger);
 			employerJobPostingPage.clickYes(logger);
-			assertTrue(employerJobPostingPage.verifySuccessMessageOnAddJobs(addJobSuccessMessages));
+			softAssert.assertTrue(employerJobPostingPage.verifySuccessMessageOnAddJobs(addJobSuccessMessages));
 			employerHomePage.clickDropdown(logger);
 			employerHomePage.clickLogout(logger);
 		}
@@ -473,7 +754,47 @@ public class OhJobsPhTest extends base {
 	}
 	
 	
-	@Test(priority = 3)
+	@Test(priority = 9)
+	public void employerApproveJobseekerApplicationAndSendMessageToJobseeker()
+	{
+		ExtentTest logger = extent.startTest("<b>Employer</b>: Approved Jobseeker Application");
+		
+		try 
+		{
+			
+			String email = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Email Address");
+			String password = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Password");
+			String firstName = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) First Name");
+			String lastName = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Last Name");
+			
+			AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
+			EmployerHomePage employerHomePage = new EmployerHomePage(driver);
+			EmployerManageApplicants employerManageApplicants = new EmployerManageApplicants(driver);
+			Utilities utilities = new Utilities(driver);
+			
+			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/admin");
+			adminLoginPage.setEmailAddress(logger, email);
+			adminLoginPage.setPassword(logger, password);
+			adminLoginPage.clickLogin(logger);
+			employerHomePage.clickManageApplicants(logger);
+			employerManageApplicants.approveJobseekserApplication(logger, "Aron", "sample message");
+			//employerManageApplicants.clickSendMessage(logger);
+			//employerManageApplicants.setSendMessageToJobseeker(logger, "Hello sample lang to");
+			//employerManageApplicants.clickSend(logger);
+		}
+		catch (Exception | AssertionError e) 
+		{
+			e.printStackTrace();
+			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+					+ e.getMessage() + "</b>");
+		}
+		extent.endTest(logger);
+		extent.flush();
+	}
+	
+	
+	
+	@Test(priority = 5)
 	public void webmasterApproveJobPost()
 	{
 		ExtentTest logger = extent.startTest("<b>Webmaster</b>: Approved Job Post");
@@ -482,27 +803,21 @@ public class OhJobsPhTest extends base {
 			String email = inputData.get("Oh Jobs PH Test Data").get("Webmaster Email Address");
 			String password = inputData.get("Oh Jobs PH Test Data").get("Webmaster Password");
 			String jobTitle = inputData.get("Oh Jobs PH Test Data").get("Job Title");
-			String jobseekerURL = inputData.get("Oh Jobs PH Test Data").get("Oh Jobs PH Jobseeker URL");
 			String approvedJobSuccessMessage = inputData.get("Oh Jobs PH Test Data").get("Approve Job Success Message");
 			
 			AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
 			WebmasterHomePage webMasterHomePage = new WebmasterHomePage(driver);
 			WebmasterManageJobPostsPage webMasterManageJobPostsPage = new WebmasterManageJobPostsPage(driver);
-			JobseekerJobsListPage jobseekerJobsListPage = new JobseekerJobsListPage(driver);
-			JobseekerJobDetailsPage jobseekerJobDetailsPage = new JobseekerJobDetailsPage(driver);
-			Utilities utilities = new Utilities(driver);
 			
 			adminLoginPage.setEmailAddress(logger, email);
 			adminLoginPage.setPassword(logger, password);
 			adminLoginPage.clickLogin(logger);
 			webMasterHomePage.clickManageJobPosts(logger);
 			webMasterManageJobPostsPage.approveJobPost(logger, jobTitle);
-			assertTrue(webMasterManageJobPostsPage.verifyNotificationOnApprovedJob(approvedJobSuccessMessage));
-			utilities.OpenNewTab(logger, jobseekerURL);
-			jobseekerJobsListPage.findApprovedJob(jobTitle);
-			
-			
-			
+			softAssert.assertTrue(webMasterManageJobPostsPage.verifyNotificationOnApprovedJob(approvedJobSuccessMessage));
+			webMasterHomePage.clickDropdown(logger);
+			webMasterHomePage.clickLogout(logger);
+
 		}
 		catch (Exception | AssertionError e) 
 		{
@@ -514,168 +829,17 @@ public class OhJobsPhTest extends base {
 		extent.flush();
 	}
 	
-	@Test(priority = 4)
-	public void jobseekerApplyJobOnMobile() throws InterruptedException, IOException
-	{
-		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Apply on one of the job using Oh Jobs PH Mobile app");
-		try 
-		{
-			service = startServer();
-			AndroidDriver<WebElement> androidDriver = Capabilities();
-			HomePage homePage = new HomePage(androidDriver);
-			LoginPage loginPage = new LoginPage(androidDriver);
-			JobsPage jobsPage = new JobsPage(androidDriver);
-			JobDetailsPage jobDetailsPage = new JobDetailsPage(androidDriver);
-			//homePage.clickLogin(logger);
-			//loginPage.setUsername(logger, "aronbraza");
-			//loginPage.setPassword(logger, "Wog12345");
-			//loginPage.clickLogin_Button(logger);
-			homePage.clickFindAJob(logger);
-			jobsPage.findAndClickJob(logger,"IT Application Support");
-			jobDetailsPage.getJD();
-			
-			//jobsPage.getJobList();
-			service.stop();
-		}
-			catch (Exception | AssertionError e) 
-			{
-				e.printStackTrace();
-				logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
-						+ e.getMessage() + "</b>");
-			}
-			extent.endTest(logger);
-			extent.flush();
-		}
 	
 	
-	
-	@Test
-	public void Check() throws InterruptedException
-	{
-		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Apply on one of the job using Oh Jobs PH Mobile app");
-		try 
-		{
-		//String email = inputData.get("Oh Jobs PH Test Data").get("Webmaster Email Address");
-		
-		JobseekerJobsListPage jobseekerJobsListPage = new JobseekerJobsListPage(driver);
-		JobseekerJobDetailsPage jobseekerJobDetailsPage = new JobseekerJobDetailsPage(driver);
-		jobseekerJobsListPage.findApprovedJob("Quality Assurance Tester");
-		assertTrue(jobseekerJobDetailsPage.getLocation(logger,"NCR, Metro Manila, Pasig, Philippines", "Bachelor's / College Degree", "1 Year or less", "PHP 26,000", "Full-time") && jobseekerJobDetailsPage.getMainContent(logger,"Ortigas Center, Pasig City", "Test website and mobile app.", "Manual and Automation Testing") );
-		}
-		catch (Exception | AssertionError e) 
-		{
-			e.printStackTrace();
-			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
-					+ e.getMessage() + "</b>");
-		}
-		extent.endTest(logger);
-		extent.flush();
-		
-	}
-	
-	@Test(priority = 2)
-	public void testlang()
-	{
-		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Apply on one of the job using Oh Jobs PH Mobile app");
-		try 
-		{
-			JobseekerLoginPage jobseekerLoginPage = new JobseekerLoginPage(driver);
-			JobseekerHomePage jobseekerHomePage = new JobseekerHomePage(driver);
-			JobseekerUserProfilePage jobseekerUserProfilePage = new JobseekerUserProfilePage(driver);
-			jobseekerHomePage.clickLogin(logger);
-			jobseekerLoginPage.setUsernameOrEmail(logger, "aronbraza");
-			jobseekerLoginPage.setPassword(logger, "Wog12345");
-			jobseekerLoginPage.clickLogin(logger);
-			jobseekerHomePage.clickUserDropdown(logger);
-			jobseekerHomePage.clickUserProfile(logger);
-			//jobseekerUserProfilePage.clickEditEducationalBackground(logger, "Test");
-			//jobseekerUserProfilePage.setEditFieldOfStudy(logger, "Test", "Sample lang to");
-			//jobseekerUserProfilePage.clickEditJobPreference(logger);
-			//jobseekerUserProfilePage.selectJobPreference(logger, "Sea-Based Jobs,Agriculture,Telecommunications/Consulting");
-			jobseekerUserProfilePage.clickEditPersonalInformation(logger);
-			//jobseekerUserProfilePage.setCountry(logger, "Japan", "", "", "");
-			Thread.sleep(5000);
-		}
-		catch (Exception | AssertionError e) 
-		{
-			e.printStackTrace();
-			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
-					+ e.getMessage() + "</b>");
-		}
-		extent.endTest(logger);
-		extent.flush();
-		
-	}
-	
-	@Test
-	public void employerSignUp()
-	{
-		ExtentTest logger = extent.startTest("<b>Employer</b>: Sign Up");
-		try 
-		{
-			AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
-			EmployerSignUpPage employerSignUpPage = new EmployerSignUpPage(driver);
-			employerSignUpPage.setEmployerName(logger, "Sample Employer");
-			employerSignUpPage.setEmployerType(logger, "Company / Local Agency");
-			employerSignUpPage.setEmployerIndustry(logger, "Information Technology");
-			employerSignUpPage.setRepresentative(logger, "Aron Paul G. Braza");
-			employerSignUpPage.setCountry(logger, "Philippines");
-			employerSignUpPage.setAddress(logger, "Ortigas Center, Pasig City");
-			employerSignUpPage.setEmailAddress(logger, "wog.aron@zetmail.com");
-			employerSignUpPage.setPassword(logger, "Wog12345");
-			employerSignUpPage.setConfirmPassword(logger, "Wog12345");
-			employerSignUpPage.clickIAgree(logger);
-			employerSignUpPage.clickSignUp(logger);
-			
-		}
-		catch (Exception | AssertionError e) 
-		{
-			e.printStackTrace();
-			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
-					+ e.getMessage() + "</b>");
-		}
-		extent.endTest(logger);
-		extent.flush();
-	}
-	
-	@Test
-	public void verifyEmail() throws InterruptedException 
-	{
-		ExtentTest logger = extent.startTest("<b>Employer</b>: Verify Email");
-		try 
-		{
-		
-		Utilities utilities = new Utilities(driver);
-		NadaEmailPage nadaEmailPage = new NadaEmailPage(driver);
-		AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
-		
-		utilities.OpenNewTab(logger, "https://getnada.com/");
-		nadaEmailPage.clickAddInbox();
-		nadaEmailPage.setName("wog.aron");
-		nadaEmailPage.setDomain("zetmail.com");
-		nadaEmailPage.clickAccept();
-		nadaEmailPage.findAndClickTemEmail("wog.aron@zetmail.com");
-		nadaEmailPage.findAndClickMessage("Oh! Jobs.ph: Employer Sign Up");
-		nadaEmailPage.clickLoginAs();
-		utilities.switchToNextTab(logger);
-		adminLoginPage.setEmailAddress(logger, "wog.aron@zetmail.com");
-		adminLoginPage.setPassword(logger, "Wog12345");
-		adminLoginPage.clickLogin(logger);
-		Thread.sleep(6000);
-		}
-		catch (Exception | AssertionError e) 
-		{
-			e.printStackTrace();
-			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
-					+ e.getMessage() + "</b>");
-		}
-		extent.endTest(logger);
-		extent.flush();
-	}
 	
 	@AfterTest
-	public void tearDown()
+	public void tearDown() throws ClassNotFoundException, SQLException
 	{
+		
+		String emailAddress = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Email Address");
+		DatabaseQuery db = new DatabaseQuery();
+		db.deleteQuery(emailAddress);
+		db.deleteQuerySignUpEmployer(emailAddress, db.getID(emailAddress));
 		driver.quit();
 	}
 

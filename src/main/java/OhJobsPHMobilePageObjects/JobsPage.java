@@ -37,8 +37,6 @@ public class JobsPage extends base {
 	
 	WebDriverWait wait = new WebDriverWait(androidDriver, 30);
 	
-	@FindBy(css = "[id*='job']")
-	private List<WebElement> job_List;
 	
 	//page-content infinite-scroll-jobs
 	//page-content ng-hide
@@ -49,27 +47,14 @@ public class JobsPage extends base {
 	@FindBy(className =  "color-black")
 	private List<WebElement> jobTitleName_List;
 	
-	
-	@FindBy(css = "[class*='details add-ons']")
-	private List<WebElement> details_List;
-	
-	@FindBy(className = "item-title")
-	public List<WebElement> jobs_List;
-	
 
-	public static boolean isloadComplete(AndroidDriver<WebElement> androidDriver)
-	{
-	    return ((JavascriptExecutor) androidDriver).executeScript("return document.readyState").equals("loaded")
-	            || ((JavascriptExecutor) androidDriver).executeScript("return document.readyState").equals("complete");
-	}
+
 	public void findAndClickJob(ExtentTest logger, String jobTitle) throws InterruptedException
 	{
-		//wait.until(ExpectedConditions.visibilityOfAllElements(job_List));
-		Thread.sleep(10000);
-		//isloadComplete(androidDriver);
-		//wait.until(ExpectedConditions.invisibilityOf(loading_Icon));
-		
-		
+	
+		//Thread.sleep(10000);
+		//waitForElement(driver, jobTitleName_List.get(0));
+		appiumWait().until(ExpectedConditions.invisibilityOf(loading_Icon));
 		for(int i=0; i<jobTitleName_List.size(); i++)
 		{
 			if(jobTitleName_List.get(i).getText().equalsIgnoreCase(jobTitle))

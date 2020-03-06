@@ -4,11 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class WebmasterHomePage {
+import resources.base;
+
+public class WebmasterHomePage extends base {
 	
 	public WebmasterHomePage(WebDriver driver)
 	{
@@ -16,6 +19,13 @@ public class WebmasterHomePage {
 	}
 	
 	//Web master Home//
+	
+	@FindBy(css = "[class*='master-drop-down']")
+	private WebElement dropdown;
+	
+	@FindBy(id = "logout")
+	private WebElement logout;
+	
 	
 	@FindBy(css = "[href='master-dashboard']")
 	private WebElement dashBoard_Menu;
@@ -40,7 +50,18 @@ public class WebmasterHomePage {
 	
 
 	
+	public void clickDropdown(ExtentTest logger)
+	{
+		webDriverWait().until(ExpectedConditions.elementToBeClickable(dropdown));
+		dropdown.click();
+		logger.log(LogStatus.INFO, "<b>Dropdown</b> has been clicked.");
+	}
 	
+	public void clickLogout(ExtentTest logger)
+	{
+		logout.click();
+		logger.log(LogStatus.INFO, "<b>Logout</b> has been clicked.");
+	}
 	
 	
 	//Web master Home//

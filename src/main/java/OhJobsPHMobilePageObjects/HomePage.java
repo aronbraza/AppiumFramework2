@@ -15,6 +15,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import resources.base;
@@ -25,6 +26,7 @@ public class HomePage extends base {
 	{
 		PageFactory.initElements(androidDriver, this);
 	}
+	
 	
 	JavascriptExecutor js =  (JavascriptExecutor)androidDriver;
 	
@@ -55,6 +57,9 @@ public class HomePage extends base {
 	
 	@FindBy(id = "PageSettings")
 	private WebElement settings_Menu;
+	
+	@FindBy(css = "[class='custom-name username']")
+	public WebElement userProfile_Menu;
 	
 	@FindBy(id = "PageInbox")
 	private WebElement inbox_Menu;
@@ -103,8 +108,16 @@ public class HomePage extends base {
 	
 	public void clickMenu(ExtentTest logger)
 	{
+		appiumWait().until(ExpectedConditions.visibilityOf(menu_Icon));
 		menu_Icon.click();
 		logger.log(LogStatus.INFO, "<b>Menu icon</b> has been clicked.");
+	}
+	
+	public void clickUserProfile(ExtentTest logger)
+	{
+		appiumWait().until(ExpectedConditions.visibilityOf(userProfile_Menu));
+		userProfile_Menu.click();
+		logger.log(LogStatus.INFO, "<b>User Profile</b> menu has been clicked.");
 	}
 	
 	public void clickHome(ExtentTest logger)

@@ -4,11 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class JobseekerHomePage {
+import resources.base;
+
+public class JobseekerHomePage extends base {
 	
 	public JobseekerHomePage(WebDriver driver)
 	{
@@ -33,6 +36,12 @@ public class JobseekerHomePage {
 	@FindBy(className = "employers-btn  ")
 	private WebElement employer_Button;
 	
+	@FindBy(css = "[title='Messages']")
+	private WebElement message_Icon;
+	
+	@FindBy(css = "[title='Notifications']")
+	private WebElement notification_Icon;
+	
 	@FindBy(className = "drop-d")
 	private WebElement userIcon_Dropdown;
 	
@@ -49,6 +58,8 @@ public class JobseekerHomePage {
 	private WebElement logOut_Menu;
 	
 	
+	
+	
 	public void clickHome(ExtentTest logger)
 	{
 		home_Button.click();
@@ -57,6 +68,7 @@ public class JobseekerHomePage {
 	
 	public void clickJobs(ExtentTest logger)
 	{
+
 		jobs_Button.click();
 		logger.log(LogStatus.INFO, "<b>Jobs button</b> has been clicked.");
 	}
@@ -84,6 +96,18 @@ public class JobseekerHomePage {
 		employer_Button.click();
 		logger.log(LogStatus.INFO, "<b>Employer button</b> has been clicked.");
 
+	}
+	
+	public void clickMessage(ExtentTest logger)
+	{
+		message_Icon.click();
+		logger.log(LogStatus.INFO, "<b>Message icon</b> has been clicked.");
+	}
+	
+	public void clickNotification(ExtentTest logger)
+	{
+		notification_Icon.click();
+		logger.log(LogStatus.INFO, "<b>Notification icon</b> has been clicked.");
 	}
 	
 	public void clickUserDropdown(ExtentTest logger)
@@ -115,4 +139,5 @@ public class JobseekerHomePage {
 		logOut_Menu.click();
 		logger.log(LogStatus.INFO, "<b>LOG OUT</b> has been clicked.");
 	}
+	
 }

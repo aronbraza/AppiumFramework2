@@ -5,22 +5,12 @@
     <classes>
       <class name="OhJobsPHTest.OhJobsPhTest">
         <methods>
-          <include name="loginAsEmployer"/>
           <include name="getSuiteName"/>
-          <include name="jobseekerSignUpWeb"/>
-          <include name="Check"/>
-          <include name="verifyEmail"/>
-          <include name="webmasterApproveJobPost"/>
-          <include name="tearDown"/>
-          <include name="testlang"/>
-          <include name="employerAddJob"/>
           <include name="setInputSheetName"/>
           <include name="initializeDriver"/>
-          <include name="jobseekerApplyJobOnMobile"/>
-          <include name="employerSignUp"/>
-          <include name="jobseekerLoginWeb"/>
-          <include name="jobseekerEditPersonalInformation"/>
+          <include name="jobseekerEditPersonalInformationMobile"/>
           <include name="setUp"/>
+          <include name="tearDown"/>
         </methods>
       </class> <!-- OhJobsPHTest.OhJobsPhTest -->
     </classes>

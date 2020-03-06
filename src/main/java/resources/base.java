@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.math3.analysis.solvers.NewtonRaphsonSolver;
+
 import org.aspectj.util.FileUtil;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -31,13 +31,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.BrowserType;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
+
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -45,6 +47,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.relevantcodes.extentreports.NetworkMode;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -240,7 +243,7 @@ public class base {
 					options.addArguments("headless");
 				}
 				driver = new ChromeDriver(options);
-				logger.log(LogStatus.INFO, "<b>Google Chrome </b>browser is opened and navigated to the "+driver.getTitle()+".");
+				logger.log(LogStatus.INFO, "<b>Google Chrome </b>browser is opened.");
 			}
 			
 			else if(browserName.equals("Firefox"))
@@ -248,7 +251,6 @@ public class base {
 				System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"\\driver\\geckodriver.exe");
 				driver = new FirefoxDriver();
 				logger.log(LogStatus.INFO, "<b>Mozilla Firefox </b>browser is opened navigated to the "+driver.getTitle()+".");
-				
 			}
 			
 			else if(browserName.equals("Internet Explorer"))
@@ -283,20 +285,17 @@ public class base {
 	public void navigateTest(ExtentTest logger) throws IOException
 	{
 		driver = initializeDriver(logger,inputData.get("Oh Jobs PH Test Data").get("Browser").toString());
-		//driver.get("http://beta-ohjobsph.ml/");
-		driver.get("https://ohjobs.ph/");
+		driver.get("http://beta-ohjobsph.ml/");
+		logger.log(LogStatus.INFO, "Navigated to <b>"+driver.getTitle()+" </b>");
 	}
 	
 	public void initializeDriverForCrossBrowsing(ExtentTest logger, String browser) throws IOException
 	{
 		driver = initializeDriver(logger,browser);
-		//driver = initializeDriver(logger,inputData.get("Oh Jobs PH Test Data").get("Browser").toString());
 		driver.get("http://beta-ohjobsph.ml/");
-		//driver.get("https://ohjobs.ph/");
 	}
 	
-	
-	
+
 	public void getScreenShotWeb(String result) throws IOException
 	{
 		File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -388,6 +387,7 @@ public class base {
 		//capabilities.setCapability("unicodeKeyboard", true);
 		//capabilities.setCapability("resetKeyboard", true);
 		//capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+		
 		androidDriver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);
 		
 	    Set<String> contextNames = androidDriver.getContextHandles();
@@ -405,6 +405,46 @@ public class base {
 		return androidDriver;
 	}
 	
+	public static AndroidDriver<WebElement> Capabilities1() throws IOException, InterruptedException {
+
+		InputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\WOG\\AppiumFramework\\global.properties");
+		Properties prop = new Properties();
+		prop.load(fis);
+		File appDir = new File("src");
+		//File app = new File(appDir, (String) prop.get(appName));
+		
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		String device=(String) prop.get("device");
+		//String device = System.getProperty("deviceName");
+		if(device.contains("Nexus"))
+		{
+		  startEmulator();
+		}
+		
+		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, device);
+		capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");;
+		capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 20);
+		capabilities.setCapability("platformName","Android");
+		capabilities.setCapability("appPackage", "com.WebOutsourcingGatewayInc.ohjobsph");
+		capabilities.setCapability("appActivity", "com.WebOutsourcingGatewayInc.ohjobsph.MainActivity");
+		capabilities.setCapability("autoGrantPermissions", true);
+		//capabilities.setCapability("autoWebview", true);
+		//capabilities.setCapability("unicodeKeyboard", true);
+		capabilities.setCapability("resetKeyboard", true);
+		//capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+		
+		androidDriver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);
+		
+	    androidDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	    
+	   // androidDriver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+		return androidDriver;
+	}
+	
+	public void openGoogleChromeMobile()
+	{
+		
+	}
 	public WebDriverWait webDriverWait()
 	{
 		WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -415,6 +455,12 @@ public class base {
 	{
 		WebDriverWait wait = new WebDriverWait(androidDriver, 30);
 		return wait;
+	}
+	
+	public void  waitForElement(WebDriver driver, WebElement element)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
 }

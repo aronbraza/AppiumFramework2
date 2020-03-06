@@ -23,9 +23,10 @@ public class JobDetailsPage extends base {
 	WebDriverWait wait = new WebDriverWait(androidDriver, 60);
 	
 	//page-content infinite-scroll-jobs
-	//@FindBy(className = "preloader")
-	@FindBy(xpath = "//div[@class='page-content infinite-scroll-jobs active-state']")
+	@FindBy(className = "preloader")
+	//@FindBy(xpath = "//div[@class='page-content infinite-scroll-jobs active-state']")
 	private WebElement loading_Icon;
+	
 	
 	@FindBy(className = "bookmark")
 	private WebElement saveJob_Icon;
@@ -38,7 +39,9 @@ public class JobDetailsPage extends base {
 	
 	public void getJD() throws InterruptedException
 	{
-		Thread.sleep(10000);
+		
+		//Thread.sleep(10000);
+		appiumWait().until(ExpectedConditions.invisibilityOf(loading_Icon));
 		for(int i=0; i<jd.size(); i++)
 		{
 			System.out.println(jd.get(i).getText());

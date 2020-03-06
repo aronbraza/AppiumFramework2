@@ -7,6 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
 public class JobseekerJobsListPage {
 	
 	public JobseekerJobsListPage(WebDriver driver)
@@ -28,7 +31,7 @@ public class JobseekerJobsListPage {
 		private WebElement previous_Button;
 		
 		
-	public void findApprovedJob(String jobName) throws InterruptedException
+	public void findApprovedJob(ExtentTest logger, String jobName) throws InterruptedException
 	{
 		for(int i=0; i<job_List.size(); i++)
 		{
@@ -36,6 +39,7 @@ public class JobseekerJobsListPage {
 			{
 				System.out.println(job_List.get(i).getText());
 				jobTitle_List.get(i).click();
+				logger.log(LogStatus.INFO, "<b>"+jobName+"</b> has been clicked on the Job List page.");
 				break;
 			}
 		}
