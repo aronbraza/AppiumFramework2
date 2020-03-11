@@ -2,23 +2,23 @@
 <testng-results ignored="10" total="21" passed="11" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-03-11T15:04:07 SGT" name="Suite" finished-at="2020-03-11T15:06:53 SGT" duration-ms="165963">
+  <suite started-at="2020-03-11T17:06:39 SGT" name="Suite" finished-at="2020-03-11T17:09:42 SGT" duration-ms="183110">
     <groups>
     </groups>
-    <test started-at="2020-03-11T15:04:07 SGT" name="Oh Jobs PH Mobile and Website Flow" finished-at="2020-03-11T15:06:53 SGT" duration-ms="165963">
+    <test started-at="2020-03-11T17:06:39 SGT" name="Oh Jobs PH Mobile and Website Flow" finished-at="2020-03-11T17:09:42 SGT" duration-ms="183110">
       <class name="OhJobsPHTest.OhJobsPhTest">
-        <test-method is-config="true" signature="getSuiteName(org.testng.ITestContext)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:04:07 SGT" name="getSuiteName" finished-at="2020-03-11T15:04:07 SGT" duration-ms="31" status="PASS">
+        <test-method is-config="true" signature="getSuiteName(org.testng.ITestContext)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:06:39 SGT" name="getSuiteName" finished-at="2020-03-11T17:06:39 SGT" duration-ms="17" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[org.testng.TestRunner@2f2dc407]]>
+                <![CDATA[org.testng.TestRunner@2e7e84f8]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getSuiteName -->
-        <test-method is-config="true" signature="setInputSheetName(java.lang.String)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:04:07 SGT" name="setInputSheetName" finished-at="2020-03-11T15:04:08 SGT" duration-ms="1057" status="PASS">
+        <test-method is-config="true" signature="setInputSheetName(java.lang.String)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:06:39 SGT" name="setInputSheetName" finished-at="2020-03-11T17:06:40 SGT" duration-ms="1074" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -29,7 +29,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setInputSheetName -->
-        <test-method is-config="true" signature="setUp(java.lang.String, org.testng.ITestContext)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:04:08 SGT" name="setUp" finished-at="2020-03-11T15:04:09 SGT" duration-ms="301" status="PASS">
+        <test-method is-config="true" signature="setUp(java.lang.String, org.testng.ITestContext)[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:06:40 SGT" name="setUp" finished-at="2020-03-11T17:06:40 SGT" duration-ms="424" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -38,62 +38,62 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[org.testng.TestRunner@2f2dc407]]>
+                <![CDATA[org.testng.TestRunner@2e7e84f8]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method is-config="true" signature="initializeDriver()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:04:09 SGT" name="initializeDriver" finished-at="2020-03-11T15:04:24 SGT" depends-on-methods="resources.base.setInputSheetName, resources.base.setUp" duration-ms="15746" status="PASS">
+        <test-method is-config="true" signature="initializeDriver()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:06:40 SGT" name="initializeDriver" finished-at="2020-03-11T17:07:01 SGT" depends-on-methods="resources.base.setInputSheetName, resources.base.setUp" duration-ms="20549" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- initializeDriver -->
-        <test-method signature="employerSignUp()[pri:1, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:04:24 SGT" name="employerSignUp" finished-at="2020-03-11T15:04:55 SGT" duration-ms="31053" status="PASS">
+        <test-method signature="employerSignUp()[pri:1, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:07:01 SGT" name="employerSignUp" finished-at="2020-03-11T17:07:38 SGT" duration-ms="36445" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- employerSignUp -->
-        <test-method signature="employerLoginWeb()[pri:2, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:04:55 SGT" name="employerLoginWeb" finished-at="2020-03-11T15:04:56 SGT" duration-ms="600" status="PASS">
+        <test-method signature="employerLoginWeb()[pri:2, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:07:38 SGT" name="employerLoginWeb" finished-at="2020-03-11T17:07:38 SGT" duration-ms="510" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- employerLoginWeb -->
-        <test-method signature="employerEditProfile()[pri:3, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:04:56 SGT" name="employerEditProfile" finished-at="2020-03-11T15:05:19 SGT" duration-ms="22756" status="PASS">
+        <test-method signature="employerEditProfile()[pri:3, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:07:38 SGT" name="employerEditProfile" finished-at="2020-03-11T17:08:11 SGT" duration-ms="32758" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- employerEditProfile -->
-        <test-method signature="employerAddJob()[pri:4, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:05:19 SGT" name="employerAddJob" finished-at="2020-03-11T15:05:31 SGT" duration-ms="11933" status="PASS">
+        <test-method signature="employerAddJob()[pri:4, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:08:11 SGT" name="employerAddJob" finished-at="2020-03-11T17:08:23 SGT" duration-ms="11641" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- employerAddJob -->
-        <test-method signature="webmasterApproveSupportingDocuments()[pri:5, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:05:31 SGT" name="webmasterApproveSupportingDocuments" finished-at="2020-03-11T15:05:39 SGT" duration-ms="7801" status="PASS">
+        <test-method signature="webmasterApproveSupportingDocuments()[pri:5, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:08:23 SGT" name="webmasterApproveSupportingDocuments" finished-at="2020-03-11T17:08:31 SGT" duration-ms="7932" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- webmasterApproveSupportingDocuments -->
-        <test-method signature="webmasterApproveJobPost()[pri:6, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:05:39 SGT" name="webmasterApproveJobPost" finished-at="2020-03-11T15:05:45 SGT" duration-ms="6776" status="PASS">
+        <test-method signature="webmasterApproveJobPost()[pri:6, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:08:31 SGT" name="webmasterApproveJobPost" finished-at="2020-03-11T17:08:38 SGT" duration-ms="7782" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- webmasterApproveJobPost -->
-        <test-method signature="jobseekerSignUpWeb()[pri:7, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:05:45 SGT" name="jobseekerSignUpWeb" finished-at="2020-03-11T15:06:13 SGT" duration-ms="27503" status="PASS">
+        <test-method signature="jobseekerSignUpWeb()[pri:7, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:08:38 SGT" name="jobseekerSignUpWeb" finished-at="2020-03-11T17:09:02 SGT" duration-ms="24028" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- jobseekerSignUpWeb -->
-        <test-method signature="jobseekerLoginWeb()[pri:8, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:06:13 SGT" name="jobseekerLoginWeb" finished-at="2020-03-11T15:06:21 SGT" duration-ms="8108" status="PASS">
+        <test-method signature="jobseekerLoginWeb()[pri:8, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:09:02 SGT" name="jobseekerLoginWeb" finished-at="2020-03-11T17:09:10 SGT" duration-ms="7904" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- jobseekerLoginWeb -->
-        <test-method signature="jobseekerApplyJobOnWeb()[pri:9, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:06:21 SGT" name="jobseekerApplyJobOnWeb" finished-at="2020-03-11T15:06:26 SGT" duration-ms="4657" status="PASS">
+        <test-method signature="jobseekerApplyJobOnWeb()[pri:9, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:09:10 SGT" name="jobseekerApplyJobOnWeb" finished-at="2020-03-11T17:09:13 SGT" duration-ms="2932" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- jobseekerApplyJobOnWeb -->
-        <test-method signature="employerApproveJobseekerApplicationAndSendMessageToJobseeker()[pri:10, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:06:26 SGT" name="employerApproveJobseekerApplicationAndSendMessageToJobseeker" finished-at="2020-03-11T15:06:34 SGT" duration-ms="8376" status="PASS">
+        <test-method signature="employerApproveJobseekerApplicationAndSendMessageToJobseeker()[pri:10, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:09:13 SGT" name="employerApproveJobseekerApplicationAndSendMessageToJobseeker" finished-at="2020-03-11T17:09:23 SGT" duration-ms="9444" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- employerApproveJobseekerApplicationAndSendMessageToJobseeker -->
-        <test-method signature="jobseekerCheckApprovedJobNotification()[pri:11, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:06:34 SGT" name="jobseekerCheckApprovedJobNotification" finished-at="2020-03-11T15:06:42 SGT" duration-ms="8073" status="PASS">
+        <test-method signature="jobseekerCheckApprovedJobNotification()[pri:11, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:09:23 SGT" name="jobseekerCheckApprovedJobNotification" finished-at="2020-03-11T17:09:31 SGT" duration-ms="8315" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- jobseekerCheckApprovedJobNotification -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T15:06:42 SGT" name="tearDown" finished-at="2020-03-11T15:06:53 SGT" duration-ms="11031" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:OhJobsPHTest.OhJobsPhTest@17497425]" started-at="2020-03-11T17:09:31 SGT" name="tearDown" finished-at="2020-03-11T17:09:42 SGT" duration-ms="11054" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
