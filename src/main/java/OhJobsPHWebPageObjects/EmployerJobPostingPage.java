@@ -137,6 +137,7 @@ public class EmployerJobPostingPage extends base {
 		
 		public void clickAddJob(ExtentTest logger)
 		{
+			webDriverWait().until(ExpectedConditions.elementToBeClickable(addJob_Button));
 			addJob_Button.click();
 			logger.log(LogStatus.INFO, "<b>Add Job button</b> has been clicked.");
 		}
@@ -159,6 +160,8 @@ public class EmployerJobPostingPage extends base {
 		{
 			numberOfVancies_Textbox.clear();
 			numberOfVancies_Textbox.sendKeys(numberOfVancies);
+			//int vacancies=0;
+			//vacancies = Integer.parseInt(numberOfVancies);
 			logger.log(LogStatus.INFO, "<b>"+numberOfVancies+"</b> has been entered on the Number of Vacancies field.");
 		}
 		

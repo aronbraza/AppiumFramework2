@@ -57,6 +57,11 @@ public class EmployerManageApplicants extends base {
 	@FindBy(id = "send-private-message-button")
 	private WebElement send_Button;
 	
+	@FindBy(id = "view-application-hire")
+	private WebElement hire_Button;
+	
+	
+	
 	public WebElement getVisibleMessageTextbox(List<WebElement> messageTextbox_List)
 	{
 		WebElement ele = null;

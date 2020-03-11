@@ -285,7 +285,7 @@ public class base {
 	public void navigateTest(ExtentTest logger) throws IOException
 	{
 		driver = initializeDriver(logger,inputData.get("Oh Jobs PH Test Data").get("Browser").toString());
-		driver.get("http://beta-ohjobsph.ml/");
+		driver.get("http://beta-ohjobsph.ml");
 		logger.log(LogStatus.INFO, "Navigated to <b>"+driver.getTitle()+" </b>");
 	}
 	

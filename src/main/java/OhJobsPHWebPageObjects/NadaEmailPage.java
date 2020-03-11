@@ -10,6 +10,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,8 +32,12 @@ public class NadaEmailPage extends base {
 
 	WebDriverWait wait = new WebDriverWait(driver, 30);
 	
+	
 	@FindBy(className = "icon-plus")
 	private WebElement addInbox_Menu;
+	
+	@FindBy(className = "add_inbox")
+	private WebElement addInbox;
 	
 	@FindBy(className = "user_name")
 	private WebElement name_Textbox;
@@ -58,6 +63,9 @@ public class NadaEmailPage extends base {
 	@FindBy(className = "msg_item")
 	private List<WebElement> messageItem_List;
 	
+	@FindBy(css = "[class*='subject'] ")
+	private List<WebElement> subjectEmail_List;
+	
 	@FindBy(className = "button")
 	private WebElement ohJobsLoginAs_Button;
 	
@@ -70,11 +78,13 @@ public class NadaEmailPage extends base {
 		addInbox_Menu.click();
 	}
 	
-	public void setName(String userName)
+	public void setTempEmail(String userName, String domain)
 	{
-		webDriverWait().until(ExpectedConditions.visibilityOf(name_Textbox));
+		webDriverWait().until(ExpectedConditions.visibilityOf(addInbox));
 		name_Textbox.sendKeys(Keys.chord(Keys.CONTROL+"a"+Keys.DELETE));
 		name_Textbox.sendKeys(userName);
+		Select select = new Select(domain_Dropdown);
+		select.selectByVisibleText(domain);
 	}
 	
 	public void setDomain(String domain)
@@ -105,30 +115,31 @@ public class NadaEmailPage extends base {
 	
 	public void findAndClickMessage(ExtentTest logger, String message) throws InterruptedException
 	{
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 
-		//webDriverWait().until(ExpectedConditions.visibilityOfAllElements(messageItem_List));
-	
-		
-		for(int i=0; i<messageItem_List.size(); i++)
+		webDriverWait().until(ExpectedConditions.visibilityOfAllElements(messageItem_List));
+		for(int i=0; i<subjectEmail_List.size(); i++)
 		{
-			if(messageItem_List.get(i).getText().contains(message))
+			if(subjectEmail_List.get(i).getText().equalsIgnoreCase(message))
 			{
-				messageItem_List.get(i).click();
+				webDriverWait().until(ExpectedConditions.elementToBeClickable(messageItem_List.get(i)));
+				Actions action = new Actions(driver);
+				action.moveToElement(messageItem_List.get(i)).click().build().perform();
+				//messageItem_List.get(i).click();
+				logger.log(LogStatus.INFO, subjectEmail_List.get(i).getText()+" has been clicked.");
 				break;
 			}
-			logger.log(LogStatus.INFO, messageItem_List.get(i).getText()+" has been clicked.");
-			
 		}
 	}
-
 	public void clickLoginAs(ExtentTest logger)
 	{
+
 		driver.switchTo().frame(iframe);
 		ohJobsLoginAs_Button.click();
 		System.out.println("Clicked on Login As");
 		driver.switchTo().defaultContent();
 		logger.log(LogStatus.INFO, "Email verification button has been clicked.");
+
 
 	}
 }

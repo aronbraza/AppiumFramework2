@@ -15,6 +15,7 @@
  		<include name="employerLoginWeb"/>
  		<include name="employerEditProfile"/>
  		<include name="employerAddJob"/>
+ 		<include name="webmasterApproveSupportingDocuments"/>
  		<include name="webmasterApproveJobPost"/>
  		<include name="jobseekerSignUpWeb"/>
  		<include name="jobseekerLoginWeb"/>
@@ -22,12 +23,6 @@
  		<include name="employerApproveJobseekerApplicationAndSendMessageToJobseeker"/>
  		<include name="jobseekerCheckApprovedJobNotification"/>
 
-
- 	
- 	
- 		
- 	
- 
       </methods>
       </class>
     </classes>

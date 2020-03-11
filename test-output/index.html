@@ -91,7 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">10 methods,   10 passed</span>
+                    <span class="method-stats">11 methods,   11 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -148,6 +148,11 @@
                       <span>
                         <img src="passed.png" width="3%"/>
                         <a href="#" panel-name="suite-Suite" title="OhJobsPHTest.OhJobsPhTest" class="method navigator-link" hash-for-method="webmasterApproveJobPost">webmasterApproveJobPost</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Suite" title="OhJobsPHTest.OhJobsPhTest" class="method navigator-link" hash-for-method="webmasterApproveSupportingDocuments">webmasterApproveSupportingDocuments</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Suite -->
@@ -238,6 +243,13 @@
                   <span class="method-name">webmasterApproveJobPost</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="webmasterApproveSupportingDocuments">
+                  </a> <!-- webmasterApproveSupportingDocuments -->
+                  <span class="method-name">webmasterApproveSupportingDocuments</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
           </div> <!-- suite-Suite-class-passed -->
         </div> <!-- panel Suite -->
@@ -260,6 +272,7 @@
           &lt;include name=&quot;employerLoginWeb&quot;/&gt;
           &lt;include name=&quot;employerEditProfile&quot;/&gt;
           &lt;include name=&quot;employerAddJob&quot;/&gt;
+          &lt;include name=&quot;webmasterApproveSupportingDocuments&quot;/&gt;
           &lt;include name=&quot;webmasterApproveJobPost&quot;/&gt;
           &lt;include name=&quot;jobseekerSignUpWeb&quot;/&gt;
           &lt;include name=&quot;jobseekerLoginWeb&quot;/&gt;
@@ -307,47 +320,51 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(10);
+data.addRows(11);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'employerSignUp')
 data.setCell(0, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(0, 3, 40872);
+data.setCell(0, 3, 31053);
 data.setCell(1, 0, 1)
-data.setCell(1, 1, 'employerEditProfile')
+data.setCell(1, 1, 'jobseekerSignUpWeb')
 data.setCell(1, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(1, 3, 32062);
+data.setCell(1, 3, 27503);
 data.setCell(2, 0, 2)
-data.setCell(2, 1, 'jobseekerSignUpWeb')
+data.setCell(2, 1, 'employerEditProfile')
 data.setCell(2, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(2, 3, 28802);
+data.setCell(2, 3, 22756);
 data.setCell(3, 0, 3)
 data.setCell(3, 1, 'employerAddJob')
 data.setCell(3, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(3, 3, 11495);
+data.setCell(3, 3, 11933);
 data.setCell(4, 0, 4)
-data.setCell(4, 1, 'jobseekerLoginWeb')
+data.setCell(4, 1, 'employerApproveJobseekerApplicationAndSendMessageToJobseeker')
 data.setCell(4, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(4, 3, 8144);
+data.setCell(4, 3, 8376);
 data.setCell(5, 0, 5)
-data.setCell(5, 1, 'webmasterApproveJobPost')
+data.setCell(5, 1, 'jobseekerLoginWeb')
 data.setCell(5, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(5, 3, 8020);
+data.setCell(5, 3, 8108);
 data.setCell(6, 0, 6)
-data.setCell(6, 1, 'employerApproveJobseekerApplicationAndSendMessageToJobseeker')
+data.setCell(6, 1, 'jobseekerCheckApprovedJobNotification')
 data.setCell(6, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(6, 3, 7832);
+data.setCell(6, 3, 8073);
 data.setCell(7, 0, 7)
-data.setCell(7, 1, 'jobseekerCheckApprovedJobNotification')
+data.setCell(7, 1, 'webmasterApproveSupportingDocuments')
 data.setCell(7, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(7, 3, 7266);
+data.setCell(7, 3, 7801);
 data.setCell(8, 0, 8)
-data.setCell(8, 1, 'jobseekerApplyJobOnWeb')
+data.setCell(8, 1, 'webmasterApproveJobPost')
 data.setCell(8, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(8, 3, 3514);
+data.setCell(8, 3, 6776);
 data.setCell(9, 0, 9)
-data.setCell(9, 1, 'employerLoginWeb')
+data.setCell(9, 1, 'jobseekerApplyJobOnWeb')
 data.setCell(9, 2, 'OhJobsPHTest.OhJobsPhTest')
-data.setCell(9, 3, 500);
+data.setCell(9, 3, 4657);
+data.setCell(10, 0, 10)
+data.setCell(10, 1, 'employerLoginWeb')
+data.setCell(10, 2, 'OhJobsPHTest.OhJobsPhTest')
+data.setCell(10, 3, 600);
 window.suiteTableData['Suite']= { tableData: data, tableDiv: 'times-div-Suite'}
 return data;
 }
@@ -405,64 +422,68 @@ return data;
             <div class="chronological-class">
               <div class="chronological-class-name">OhJobsPHTest.OhJobsPhTest</div> <!-- chronological-class-name -->
               <div class="configuration-suite before">
-                <span class="method-name">getSuiteName(org.testng.TestRunner@cfb94fd)</span>
+                <span class="method-name">getSuiteName(org.testng.TestRunner@2f2dc407)</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-suite before -->
               <div class="configuration-test before">
                 <span class="method-name">setInputSheetName(Input.xlsx)</span>
-                <span class="method-start">48 ms</span>
+                <span class="method-start">45 ms</span>
               </div> <!-- configuration-test before -->
               <div class="configuration-test before">
-                <span class="method-name">setUp(Login, org.testng.TestRunner@cfb94fd)</span>
-                <span class="method-start">2254 ms</span>
+                <span class="method-name">setUp(Login, org.testng.TestRunner@2f2dc407)</span>
+                <span class="method-start">1102 ms</span>
               </div> <!-- configuration-test before -->
               <div class="configuration-test before">
                 <span class="method-name">initializeDriver</span>
-                <span class="method-start">2631 ms</span>
+                <span class="method-start">1403 ms</span>
               </div> <!-- configuration-test before -->
               <div class="test-method">
                 <span class="method-name">employerSignUp</span>
-                <span class="method-start">24040 ms</span>
+                <span class="method-start">17175 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">employerLoginWeb</span>
-                <span class="method-start">64926 ms</span>
+                <span class="method-start">48372 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">employerEditProfile</span>
-                <span class="method-start">65434 ms</span>
+                <span class="method-start">48972 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">employerAddJob</span>
-                <span class="method-start">97498 ms</span>
+                <span class="method-start">71730 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">webmasterApproveSupportingDocuments</span>
+                <span class="method-start">83665 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">webmasterApproveJobPost</span>
-                <span class="method-start">108995 ms</span>
+                <span class="method-start">91468 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">jobseekerSignUpWeb</span>
-                <span class="method-start">117027 ms</span>
+                <span class="method-start">98247 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">jobseekerLoginWeb</span>
-                <span class="method-start">145831 ms</span>
+                <span class="method-start">125752 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">jobseekerApplyJobOnWeb</span>
-                <span class="method-start">153977 ms</span>
+                <span class="method-start">133862 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">employerApproveJobseekerApplicationAndSendMessageToJobseeker</span>
-                <span class="method-start">157493 ms</span>
+                <span class="method-start">138521 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">jobseekerCheckApprovedJobNotification</span>
-                <span class="method-start">165328 ms</span>
+                <span class="method-start">146899 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-test after">
                 <span class="method-name">tearDown</span>
-                <span class="method-start">172599 ms</span>
+                <span class="method-start">154975 ms</span>
               </div> <!-- configuration-test after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

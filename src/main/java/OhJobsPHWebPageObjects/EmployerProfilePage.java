@@ -74,7 +74,7 @@ public class EmployerProfilePage extends base {
 	private List<WebElement> chooseFile_Button;
 	
 	@FindBy(id = "sec-certificate-file")
-	private WebElement fileNameUploaded;
+	private WebElement secFileName;
 	
 	@FindBy(id = "save-profile")
 	private WebElement updateProfile_Button;
@@ -120,7 +120,7 @@ public class EmployerProfilePage extends base {
 		
 		selectFrom.selectByVisibleText(getBusinnessHours.get(0).toString());
 		selectTo.selectByVisibleText(getBusinnessHours.get(1).toString());
-		logger.log(LogStatus.INFO, "<b>"+getBusinnessHours.toString()+"</b> has been selected on the Business Hours field.");
+		logger.log(LogStatus.INFO, "<b>"+getBusinnessHours.toString().replace(",", "-")+"</b> has been selected on the Business Hours field.");
 	}
 	
 	public void setFaxNumber(ExtentTest logger, String faxNumber)
@@ -167,10 +167,11 @@ public class EmployerProfilePage extends base {
 	{
 		
 		chooseFile_Button.get(0).click();
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		Runtime.getRuntime().exec(System.getProperty("user.dir")+"\\autoIT script\\uploadSecFile.exe");
-		Thread.sleep(10000);
-		logger.log(LogStatus.INFO, "<b>"+fileNameUploaded.getText()+" </b> has been uploaded on the Sec Cerificate upload field.");
+		webDriverWait().until(ExpectedConditions.textToBePresentInElement(secFileName, "sec.jpg"));
+		//Thread.sleep(5000);
+		logger.log(LogStatus.INFO, "<b>"+secFileName.getText()+" </b> has been uploaded on the Sec Cerificate upload field.");
 	}
 	
 	public void clickUpdateProfile(ExtentTest logger)

@@ -1,6 +1,10 @@
 package OhJobsPHWebPageObjects;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,7 +61,47 @@ public class EmployerHomePage extends base {
 	@FindBy(css = "[href='followers'] li")
 	private WebElement followers_Menu;
 	
+	@FindBy(className = "input-amount")
+	private WebElement amount_Textbox;
+	
+	@FindBy(className = "ZebraDialog_Button_0")
+	private WebElement submit_Button;
+	
+	@FindBy(css = "[class='ZebraDialog_BodyOuter ZebraDialog_NoTitle ZebraDialog_NoButtons']")
+	private List<WebElement> thankYouForFeedback_Modal;
+	
+	
 	//Home//
+	
+	public void setAmount(ExtentTest logger ,String amount)
+	{
+		webDriverWait().until(ExpectedConditions.visibilityOf(amount_Textbox));
+		amount_Textbox.sendKeys(amount);
+		logger.log(LogStatus.INFO, "<b>"+amount+"</b> has been entered on the Amount field.");
+	}
+	
+	public void clickSubmit(ExtentTest logger)
+	{
+		submit_Button.click();
+		logger.log(LogStatus.INFO, "<b>Submit</b> button has been clicked.");
+	}
+	
+	public void verifyModalMessage() throws InterruptedException
+	{
+		System.out.println(thankYouForFeedback_Modal.get(0).getText());
+		if(thankYouForFeedback_Modal.size() == 0)
+		{
+		
+			System.out.print("Not displayed.");
+		}
+		else
+		{
+			webDriverWait().until(ExpectedConditions.invisibilityOf(thankYouForFeedback_Modal.get(0)));
+			System.out.print("Displayed.");
+		}
+	
+	
+	}
 	
 	
 	public String getCompanyName()

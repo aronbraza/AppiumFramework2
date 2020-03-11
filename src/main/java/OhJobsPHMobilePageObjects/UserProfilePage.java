@@ -129,6 +129,7 @@ public class UserProfilePage extends base {
 		
 				JavascriptExecutor je = (JavascriptExecutor) androidDriver;
 				je.executeScript("arguments[0].scrollIntoView(true);",monthPicker.get(i));
+				je.executeScript("window.scrollBy(0,1000)");
 				break;
 			}
 			

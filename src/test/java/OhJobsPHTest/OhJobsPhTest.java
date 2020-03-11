@@ -45,6 +45,7 @@ import OhJobsPHWebPageObjects.JobseekerSignUpPage;
 import OhJobsPHWebPageObjects.JobseekerUserProfilePage;
 import OhJobsPHWebPageObjects.NadaEmailPage;
 import OhJobsPHWebPageObjects.WebmasterHomePage;
+import OhJobsPHWebPageObjects.WebmasterManageEmployers;
 import OhJobsPHWebPageObjects.WebmasterManageJobPostsPage;
 import OhJobsPHWebPageObjects.db_Base;
 import io.appium.java_client.AppiumDriver;
@@ -71,7 +72,7 @@ public class OhJobsPhTest extends base {
 		extent.flush();
 	}
 	
-	@Test(priority = 6)
+	@Test(priority = 7)
 	public void jobseekerSignUpWeb()
 	{
 		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Sign Up");
@@ -109,10 +110,10 @@ public class OhJobsPhTest extends base {
 			softAssert.assertTrue(jobseekerSignUpPage.verifySuccessMessage(successMessage));
 			utilities.OpenNewTab(logger, getNadaURL);
 			nadaEmailPage.clickAddInbox();
-			nadaEmailPage.setName(emailAddress.replaceAll("@zetmail.com", ""));
-			nadaEmailPage.setDomain(emailAddress.substring(emailAddress.length() - 11));
+			nadaEmailPage.setTempEmail(emailAddress.replaceAll("@zetmail.com", ""), emailAddress.substring(emailAddress.length() - 11));
+			//nadaEmailPage.setDomain(emailAddress.substring(emailAddress.length() - 11));
 			nadaEmailPage.clickAccept();
-			nadaEmailPage.findAndClickMessage(logger,"Your Oh! Jobs.ph account has been successfully created");
+			nadaEmailPage.findAndClickMessage(logger,"Your Oh! Jobs.ph account has been successfully created.");
 			nadaEmailPage.clickLoginAs(logger);
 			utilities.switchNextTab(logger);
 			
@@ -127,7 +128,7 @@ public class OhJobsPhTest extends base {
 		extent.flush();
 	}
 	
-	@Test(priority = 7)
+	@Test(priority = 8)
 	public void jobseekerLoginWeb()
 	{
 		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Login");
@@ -469,7 +470,7 @@ public class OhJobsPhTest extends base {
 			
 			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/");
 			jobseekerHomePage.clickNotification(logger);
-			jobseekerNotificationPage.getApprovedJobApplicationNotif(jobTitle);
+			jobseekerNotificationPage.getApprovedJobApplicationNotif(logger,jobTitle);
 		} 
 		catch (Exception | AssertionError e) 
 		{
@@ -483,7 +484,7 @@ public class OhJobsPhTest extends base {
 	
 	
 	
-	@Test(priority = 8)
+	@Test(priority = 9)
 	public void jobseekerApplyJobOnWeb()
 	{
 		ExtentTest logger = extent.startTest("<b>Jobseeker</b>: Apply Jobs");
@@ -499,6 +500,7 @@ public class OhJobsPhTest extends base {
 		 jobseekerJobDetailsPage.clickApplyNow(logger);
 		 jobseekerJobDetailsPage.setWriteYouPitch(logger, "Good morning test apply lang.");
 		 jobseekerJobDetailsPage.clickSubmit(logger);
+		 
 		 
 		 
 		}
@@ -576,9 +578,9 @@ public class OhJobsPhTest extends base {
 			NadaEmailPage nadaEmailPage = new NadaEmailPage(driver);
 			Utilities utilities = new Utilities(driver);
 			
-			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/employers-signup");
-			//jobseekerHomePage.clickSignUp(logger);
-			//jobseekerSignUpPage.clickEmployerSignUp(logger);
+			//utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/employers-signup");
+			jobseekerHomePage.clickSignUp(logger);
+			jobseekerSignUpPage.clickEmployerSignUp(logger);
 			employerSignUpPage.setEmployerName(logger, employerName);
 			employerSignUpPage.setEmployerType(logger, employerType);
 			employerSignUpPage.setEmployerIndustry(logger, employerIndustry);
@@ -596,8 +598,8 @@ public class OhJobsPhTest extends base {
 	
 			utilities.OpenNewTab(logger, getNadaURL);
 			nadaEmailPage.clickAddInbox();
-			nadaEmailPage.setName(emailAddress.replaceAll("@zetmail.com", ""));
-			nadaEmailPage.setDomain(emailAddress.substring(emailAddress.length() - 11));
+			nadaEmailPage.setTempEmail(emailAddress.replaceAll("@zetmail.com", ""), emailAddress.substring(emailAddress.length() - 11));
+			//nadaEmailPage.setDomain(emailAddress.substring(emailAddress.length() - 11));
 			nadaEmailPage.clickAccept();
 			nadaEmailPage.findAndClickMessage(logger,"Oh! Jobs.ph: Sign up Confirmation");
 			nadaEmailPage.clickLoginAs(logger);
@@ -660,10 +662,13 @@ public class OhJobsPhTest extends base {
 		String industry = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Industry");
 		String successMessage = inputData.get("Oh Jobs PH Test Data").get("Employer (Edit Profile) Success Message");
 			
-			
+		
 		EmployerHomePage employerHomePage = new EmployerHomePage(driver);
 		EmployerProfilePage employerProfilePage = new EmployerProfilePage(driver);
 		
+		employerHomePage.setAmount(logger, "5000");
+		employerHomePage.clickSubmit(logger);
+		employerHomePage.verifyModalMessage();
 		employerHomePage.clickDropdown(logger);
 		employerHomePage.clickProfile(logger);
 		employerProfilePage.clickEditProfile(logger);
@@ -754,7 +759,7 @@ public class OhJobsPhTest extends base {
 	}
 	
 	
-	@Test(priority = 9)
+	@Test(priority = 10)
 	public void employerApproveJobseekerApplicationAndSendMessageToJobseeker()
 	{
 		ExtentTest logger = extent.startTest("<b>Employer</b>: Approved Jobseeker Application");
@@ -766,6 +771,7 @@ public class OhJobsPhTest extends base {
 			String password = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Password");
 			String firstName = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) First Name");
 			String lastName = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Last Name");
+			String employerMessage = inputData.get("Oh Jobs PH Test Data").get("Employer(Approve Jobseeker) Approve Jobseeker Application Message");
 			
 			AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
 			EmployerHomePage employerHomePage = new EmployerHomePage(driver);
@@ -777,7 +783,7 @@ public class OhJobsPhTest extends base {
 			adminLoginPage.setPassword(logger, password);
 			adminLoginPage.clickLogin(logger);
 			employerHomePage.clickManageApplicants(logger);
-			employerManageApplicants.approveJobseekserApplication(logger, "Aron", "sample message");
+			employerManageApplicants.approveJobseekserApplication(logger, "Aron Braza",employerMessage);
 			//employerManageApplicants.clickSendMessage(logger);
 			//employerManageApplicants.setSendMessageToJobseeker(logger, "Hello sample lang to");
 			//employerManageApplicants.clickSend(logger);
@@ -794,7 +800,7 @@ public class OhJobsPhTest extends base {
 	
 	
 	
-	@Test(priority = 5)
+	@Test(priority = 6)
 	public void webmasterApproveJobPost()
 	{
 		ExtentTest logger = extent.startTest("<b>Webmaster</b>: Approved Job Post");
@@ -809,9 +815,6 @@ public class OhJobsPhTest extends base {
 			WebmasterHomePage webMasterHomePage = new WebmasterHomePage(driver);
 			WebmasterManageJobPostsPage webMasterManageJobPostsPage = new WebmasterManageJobPostsPage(driver);
 			
-			adminLoginPage.setEmailAddress(logger, email);
-			adminLoginPage.setPassword(logger, password);
-			adminLoginPage.clickLogin(logger);
 			webMasterHomePage.clickManageJobPosts(logger);
 			webMasterManageJobPostsPage.approveJobPost(logger, jobTitle);
 			softAssert.assertTrue(webMasterManageJobPostsPage.verifyNotificationOnApprovedJob(approvedJobSuccessMessage));
@@ -829,17 +832,49 @@ public class OhJobsPhTest extends base {
 		extent.flush();
 	}
 	
-	
+	@Test(priority = 5)
+	public void webmasterApproveSupportingDocuments()
+	{
+		ExtentTest logger = extent.startTest("<b>Webmaster:</b> Approve Supporting Documents of the employer");
+		try
+		{
+			String email = inputData.get("Oh Jobs PH Test Data").get("Webmaster Email Address");
+			String password = inputData.get("Oh Jobs PH Test Data").get("Webmaster Password");
+			String employerName = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Employer Name");
+			AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
+			WebmasterHomePage webmasterHomePage = new WebmasterHomePage(driver);
+			WebmasterManageEmployers webmasterManageEmployers = new WebmasterManageEmployers(driver);
+			Utilities utilities = new Utilities(driver);
+			
+			utilities.OpenNewTab(logger, "http://beta-ohjobsph.ml/admin");
+			adminLoginPage.setEmailAddress(logger, email);
+			adminLoginPage.setPassword(logger, password);
+			adminLoginPage.clickLogin(logger);
+			webmasterHomePage.clickManageEmployers(logger);
+			webmasterManageEmployers.approvedSupportingDocuments(logger, employerName);
+		}
+		catch (Exception | AssertionError e) 
+		{
+			e.printStackTrace();
+			logger.log(LogStatus.FAIL, "Exception encountered due to: <b style='color:red'>" + e.getClass() + "<br>"
+					+ e.getMessage() + "</b>");
+		}
+		extent.endTest(logger);
+		extent.flush();
+	}
+		
 	
 	
 	@AfterTest
 	public void tearDown() throws ClassNotFoundException, SQLException
 	{
-		
-		String emailAddress = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Email Address");
+		String jobseekerEmailAddress = inputData.get("Oh Jobs PH Test Data").get("Jobseeker (Sign Up) Email Address");
+		String jobTitle = inputData.get("Oh Jobs PH Test Data").get("Job Title");
+		String employerEmailAddress = inputData.get("Oh Jobs PH Test Data").get("Employer (Sign Up) Email Address");
 		DatabaseQuery db = new DatabaseQuery();
-		db.deleteQuery(emailAddress);
-		db.deleteQuerySignUpEmployer(emailAddress, db.getID(emailAddress));
+		db.deleteQueryJobseekerAccount(jobseekerEmailAddress, db.getIDJobseeker(jobseekerEmailAddress));
+		db.deleteQueryJob(jobTitle, db.getIDJob(jobTitle));
+		db.deleteQueryEmployerAccount(employerEmailAddress, db.getIDEmployer(employerEmailAddress));
 		driver.quit();
 	}
 

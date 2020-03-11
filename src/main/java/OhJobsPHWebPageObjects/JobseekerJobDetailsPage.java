@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
+import resources.Utilities;
 import resources.base;
 
 
@@ -37,11 +38,14 @@ public class JobseekerJobDetailsPage extends base {
 	@FindBy(className = "main-btn-apply")
 	private WebElement applyNow_Button;
 	
-	@FindBy(css = "[class='pop-up-field-pitch col-md-12 form-control']")
+	@FindBy(css = "[class*='pop-up-field-pitch']")
 	private WebElement pitch_Textbox;
 	
 	@FindBy(id = "submit-application")
 	private WebElement submit_Button;
+	
+	@FindBy(css = "[class*='alert-success']")
+	private List<WebElement> successMessage_Text;
 	
 
 	public void clickApplyNow(ExtentTest logger)
@@ -61,6 +65,20 @@ public class JobseekerJobDetailsPage extends base {
 	{
 		submit_Button.click();
 		logger.log(LogStatus.INFO, "<b>Submit button</b> has been clicked.");
+	}
+	
+	public void verifySuccessMessage()
+	{
+		
+		
+		Utilities utilities = new Utilities(driver);
+	
+		String a = utilities.getVisibleElement(successMessage_Text).getText();
+		String b = utilities.getVisibleElement(successMessage_Text).getText();
+		
+		System.out.println(a);
+		System.out.println(b);
+		webDriverWait().until(ExpectedConditions.invisibilityOf(utilities.getVisibleElement(successMessage_Text)));
 	}
 	
 	
